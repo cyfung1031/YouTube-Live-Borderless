@@ -1,7 +1,10 @@
 /* ==UserStyle==
 @name         YouTube Live Borderless
-@version      0.1.1
+@version      0.1.2
 @namespace    github.com/cyfung1031
+@license      MIT
+@description  Make YouTube Live Borderless
+@author       CY Fung
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") {

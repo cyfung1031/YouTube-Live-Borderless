@@ -51,14 +51,12 @@
     }
     :has(iframe#chatframe) ytd-watch-flexy.style-scope:not([fullscreen]) #movie_player>.html5-video-container > video {
         width: unset !important;
-        height: unset !important;
+        height: 100% !important;
         left: 0 !important;
-        right: 0;
-        top: 0 !important;
-        bottom: 0;
-        max-width: 100%;
+        right: 0 !important;
         max-height: 100%;
-        margin: 0 auto;
+        max-width: 100%;
+        margin:0 auto;
     }
     :has(iframe#chatframe) ytd-watch-flexy.style-scope:not([fullscreen]) #movie_player .ytp-iv-video-content {
         width: 100% !important;

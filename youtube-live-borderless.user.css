@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name         YouTube Live Borderless
-@version      0.1.2
+@version      0.1.4
 @namespace    github.com/cyfung1031
 @license      MIT
 @description  Make YouTube Live Borderless
@@ -8,90 +8,91 @@
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") {
-:has(iframe#chatframe) ytd-watch-flexy.style-scope {
-    --ytd-margin-2y: var(--ytd-margin-2x);
-    --ytd-margin-4y: var(--ytd-margin-4x);
-    --ytd-margin-6y: var(--ytd-margin-6x);
-    --ytd-margin-8y: var(--ytd-margin-8x);
-}
-:has(iframe#chatframe) #columns.style-scope.ytd-watch-flexy {
-    --ytd-margin-2x: 0;
-    --ytd-margin-4x: 0;
-    --ytd-margin-6x: 0;
-    --ytd-margin-8x: 0;
-}
-:has(iframe#chatframe) .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy) {
-    --ytd-margin-2x: var(--ytd-margin-2y);
-    --ytd-margin-4x: var(--ytd-margin-4y);
-    --ytd-margin-6x: var(--ytd-margin-6y);
-    --ytd-margin-8x: var(--ytd-margin-8y);
-}
-:has(iframe#chatframe) #secondary-inner.style-scope.ytd-watch-flexy {
-    display: flex;
-    flex-direction: column;
-}
+    :has(iframe#chatframe) ytd-watch-flexy.style-scope {
+        --ytd-margin-2y: var(--ytd-margin-2x);
+        --ytd-margin-4y: var(--ytd-margin-4x);
+        --ytd-margin-6y: var(--ytd-margin-6x);
+        --ytd-margin-8y: var(--ytd-margin-8x);
+    }
+    :has(iframe#chatframe) #columns.style-scope.ytd-watch-flexy {
+        --ytd-margin-2x: 0;
+        --ytd-margin-4x: 0;
+        --ytd-margin-6x: 0;
+        --ytd-margin-8x: 0;
+    }
+    :has(iframe#chatframe) .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy) {
+        --ytd-margin-2x: var(--ytd-margin-2y);
+        --ytd-margin-4x: var(--ytd-margin-4y);
+        --ytd-margin-6x: var(--ytd-margin-6y);
+        --ytd-margin-8x: var(--ytd-margin-8y);
+    }
+    :has(iframe#chatframe) #secondary-inner.style-scope.ytd-watch-flexy {
+        display: flex;
+        flex-direction: column;
+    }
 
-:has(iframe#chatframe) #movie_player .html5-video-container:has(video) {
-    width: 100%;
-    display: flex;
-    height: 100%;
-}
-:has(iframe#chatframe) ytd-watch-flexy.style-scope {
-    --movie-player-ml: 16px;
-    --movie-player-mr: 16px;
-}
-:has(iframe#chatframe) #movie_player .ytp-chrome-bottom[style*="width"] {
-    width: 100% !important;
-    left: 0 !important;
-}
-:has(iframe#chatframe) #movie_player .html5-video-container > video {
-    width: unset !important;
-    height: unset !important;
-    max-width: 100%;
-    max-height: 100%;
-}
-:has(iframe#chatframe) #movie_player .ytp-iv-video-content {
-    width: calc(100%) !important;
-    height: 100% !important;
-}
+    :has(iframe#chatframe) #movie_player .html5-video-container:has(video) {
+        width: 100%;
+        display: flex;
+        height: 100%;
+    }
+    :has(iframe#chatframe) ytd-watch-flexy.style-scope {
+        --movie-player-ml: 16px;
+        --movie-player-mr: 16px;
+    }
+    :has(iframe#chatframe) #movie_player .ytp-chrome-bottom[style*="width"] {
+        width: unset !important;
+        left: 12px !important;
+        right: 12px !important;
+    }
+    :has(iframe#chatframe) #movie_player .html5-video-container > video {
+        width: unset !important;
+        height: unset !important;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    :has(iframe#chatframe) #movie_player .ytp-iv-video-content {
+        width: calc(100%) !important;
+        height: 100% !important;
+    }
 
-:has(iframe#chatframe) #secondary-inner.style-scope.ytd-watch-flexy {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    :has(iframe#chatframe) #secondary-inner.style-scope.ytd-watch-flexy {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-:has(iframe#chatframe) #chat:not([collapsed]) {
-    flex: 999;
-}
-:has(iframe#chatframe) body ytd-watch-flexy #right-tabs {
-    display: flex;
-    margin: 0 !important;
-    flex: 1;
-    flex-direction: column;
-    width: 100%;
-}
-:has(iframe#chatframe) body #right-tabs #material-tabs,
-:has(iframe#chatframe) body #right-tabs .tab-content {
-    outline: 0;
-}
-:has(iframe#chatframe) #primary-inner > *:not(#player) {
-    padding: 0 24px 0;
-}
-:has(iframe#chatframe) .ytp-chapter-hover-container[style*="width"] {
-    width: calc(100%) !important;
-}
-:has(iframe#chatframe) .tab-content {
-    flex: 999;
-}
+    :has(iframe#chatframe) #chat:not([collapsed]) {
+        flex: 999;
+    }
+    :has(iframe#chatframe) body ytd-watch-flexy #right-tabs {
+        display: flex;
+        margin: 0 !important;
+        flex: 1;
+        flex-direction: column;
+        width: 100%;
+    }
+    :has(iframe#chatframe) body #right-tabs #material-tabs,
+    :has(iframe#chatframe) body #right-tabs .tab-content {
+        outline: 0;
+    }
+    :has(iframe#chatframe) #primary-inner > *:not(#player) {
+        padding: 0 24px 0;
+    }
+    :has(iframe#chatframe) .ytp-chapter-hover-container[style*="width"] {
+        width: calc(100%) !important;
+    }
+    :has(iframe#chatframe) .tab-content {
+        flex: 999;
+    }
 
-:has(iframe#chatframe) h1.style-scope.ytd-watch-metadata {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-}
-:has(iframe#chatframe) body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
-    max-width: unset;
-}
+    :has(iframe#chatframe) h1.style-scope.ytd-watch-metadata {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    :has(iframe#chatframe) body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+        max-width: unset;
+    }
 }

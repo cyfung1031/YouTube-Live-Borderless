@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.6
+@version        0.1.7
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -15,9 +15,9 @@
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
 ==/UserStyle== */
 
-@-moz-document url-prefix("https://www.youtube.com/watch?v=") {
+@-moz-document url-prefix("https://www.youtube.com/watch?v=") 
 
-    html:has(iframe#chatframe) {
+    contentf(){
 
         if no-masthead {
 
@@ -64,6 +64,20 @@
                     max-height: 100%;
                 }
             }
+
+            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+
+                height:100vh; 
+                #player-theater-container.ytd-watch-flexy {
+                    flex: 77;
+                        max-height: unset;
+                }
+                #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
+
+                    overflow: visible;
+                }
+            }
+            
         }
 
         if no-bottom-row {
@@ -168,18 +182,12 @@
             }
         }
 
-
-        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
-
-            height:100vh; 
-            #player-theater-container.ytd-watch-flexy {
-                flex: 77;
-                    max-height: unset;
-            }
-            #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
-
-                overflow: visible;
-            }
-        }
     }
-}
+    
+    if apply-to-live-chat-only 
+        html:has(iframe#chatframe)
+            contentf()
+    else
+        html
+            contentf()
+        

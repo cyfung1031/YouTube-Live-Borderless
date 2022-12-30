@@ -1,12 +1,13 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.8
+@version        0.1.9
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
 @author         CY Fung
 @supportURL     https://github.com/cyfung1031/YouTube-Live-Borderless/
 @preprocessor   stylus
+@var checkbox   apply-to-live-chat-only         "Apply to Live Chat Only"                       1
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
 @var range      masthead-hoverable-height       "Height of Invisible MastHead Bar"              [0, 0, 12, 2, "px"]
 @var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
@@ -17,18 +18,39 @@
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") 
 
+    
     contentf(){
+        
+        &:not([tabview-loaded]){
+            
+            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy, 
+            #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy {
+                display:none !important;
+            }
 
+            #player-theater-container{
+                max-height: calc(100vh - 100px) !important;
+            }
+            #cinematics{
+                contain: layout;
+            }
+        }
+
+        
         if no-masthead {
 
+            
+            
             &,
             ytd-app,
             ytd-page-manager[class].style-scope,
             ytd-watch-flexy[class].style-scope {
-                --ytd-masthead-height: 0;
-                --ytd-toolbar-height: 0;
-                --ytd-watch-flexy-masthead-height: 0;
+                /* 0px not 0 */
+                --ytd-masthead-height: 0px;
+                --ytd-toolbar-height: 0px;
+                --ytd-watch-flexy-masthead-height: 0px;
             }
+            
             #masthead-container {
                 opacity: 0 !important;
                 transition: opacity 300ms;
@@ -53,6 +75,7 @@
                 }
                 
             }
+            
 
             ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
 
@@ -66,6 +89,7 @@
                 }
                 
             }
+            
 
             ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
 
@@ -79,6 +103,7 @@
                 }
                 
             }
+            
             
         }
 

@@ -13,6 +13,6 @@ Stylus - Firefox: https://addons.mozilla.org/en-US/firefox/addon/styl-us/
 3. To ensure there is correct video sizing, please install [YouTube Video Resize Fix](https://greasyfork.org/scripts/457319-youtube-video-resize-fix), which is a generic script for video sizing with Userstyles.
 
 ### Related Userscript / Userstyle:
-[YouTube Video Resize Fix](https://greasyfork.org/scripts/457319-youtube-video-resize-fix)
-[Youtube Live Borderless](https://greasyfork.org/scripts/457317-youtube-live-borderless)
-[Tabview Youtube](https://greasyfork.org/scripts/428651-tabview-youtube)
+- [YouTube Video Resize Fix](https://greasyfork.org/scripts/457319-youtube-video-resize-fix)
+- [Youtube Live Borderless](https://greasyfork.org/scripts/457317-youtube-live-borderless)
+- [Tabview Youtube](https://greasyfork.org/scripts/428651-tabview-youtube)

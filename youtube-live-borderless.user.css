@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.14
+@version        0.1.15
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -16,6 +16,7 @@
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
+@var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                               0
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") 
@@ -135,7 +136,7 @@
                 --ytd-margin-6x: 0;
                 --ytd-margin-8x: 0;
             }
-            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy) {
+            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy), #below, #player {
                 --ytd-margin-2x: var(--ytd-margin-2y);
                 --ytd-margin-4x: var(--ytd-margin-4y);
                 --ytd-margin-6x: var(--ytd-margin-6y);
@@ -197,9 +198,17 @@
                     flex: 77;
                 }
             }
-            #primary-inner > *:not(#player) {
+            &[is-two-columns_] #primary-inner > *:not(#player) {
                 padding: 0 primary-content-margin 0;
             }
+            &:not([is-two-columns_]) #primary-inner > *:not(#player) {
+                padding: 0;
+            }
+            
+            &:not([is-two-columns_]) #primary-inner #below > *:not(ytd-live-chat-frame#chat) {
+                padding: 0 primary-content-margin 0;
+            }
+            
             h1.style-scope.ytd-watch-metadata {
                 display: flex;
                 flex-direction: row;
@@ -232,6 +241,39 @@
                 border-radius: unset;
             }
 
+        }
+        
+        if chat-fill-single-col-exp {
+            
+            &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) {
+
+                #primary-inner.style-scope.ytd-watch-flexy {
+                    max-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                #below.style-scope.ytd-watch-flexy{
+                    flex-shrink: 1;
+                    overflow: auto;
+                    position: relative;
+                    padding-top: 100%;
+                }
+
+                #below.style-scope.ytd-watch-flexy > #chat.style-scope.ytd-watch-flexy:not([collapsed]) {
+                    margin: 0;
+                    min-height: unset;
+                    height: auto;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+                    top: 0;
+                }
+
+            }
+            
         }
         
     }

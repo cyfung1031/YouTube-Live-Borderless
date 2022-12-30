@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.20
+@version        0.1.21
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -13,7 +13,7 @@
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
-@var range      min-below-area                  "Minimum area below video"                      [0, 0, 160, 10, 'px']
+@var range      min-below-area                  "Minimum area below video (experimental)"       [0, 0, 160, 10, 'px']
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
@@ -119,6 +119,7 @@ chrome-bottom-bar-margin = 12px
                 #player-theater-container.ytd-watch-flexy {
                     flex: 77;
                     max-height: unset;
+                    
                 }
                 #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
                     overflow: visible;
@@ -128,6 +129,8 @@ chrome-bottom-bar-margin = 12px
             
             
         }
+                
+                       
 
         if no-bottom-row {
             
@@ -242,9 +245,60 @@ chrome-bottom-bar-margin = 12px
                 flex-wrap: wrap;
                 align-items: center;
             }
+            
+            
             #player-container-outer.ytd-watch-flexy {
                 max-width: unset;
-                max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for 4:3 video
+            }
+            
+
+
+            
+        }
+        
+        
+
+        if min-below-area > 0 {
+
+
+            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+
+                #player #player-container-outer.ytd-watch-flexy, // layout outside
+                #player #player-container-inner.ytd-watch-flexy, // no effect
+                #player #player-container.ytd-watch-flexy { // layout inside
+                    max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px));
+                }
+
+            }
+
+            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+
+                #player-theater-container.ytd-watch-flexy {
+                    max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px));
+                }
+
+            }
+
+
+        } else {
+            
+            
+            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+
+                #player #player-container-outer.ytd-watch-flexy,
+                #player #player-container-inner.ytd-watch-flexy,
+                #player #player-container.ytd-watch-flexy {
+                    max-height: calc(100vh - var(--ytd-toolbar-height, 0px)); // for very wide screen
+                }
+
+            }
+
+            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+
+                #player-theater-container.ytd-watch-flexy {
+                    max-height: calc(100vh - var(--ytd-toolbar-height, 0px)); // for 4:3 video
+                }
+
             }
             
         }

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.15
+@version        0.1.16
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -9,14 +9,14 @@
 @preprocessor   stylus
 @var checkbox   apply-to-live-chat-only         "Apply to Live Chat Only"                       1
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
-@var range      masthead-hoverable-height       "Height of Invisible MastHead Bar"              [0, 0, 12, 2, "px"]
+@var range      masthead-hoverable-height       "Invisible MastHead Bar Height"                 [0, 0, 12, 2, "px"]
 @var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
-@var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                               0
+@var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                    0
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") 
@@ -55,26 +55,42 @@
             }
             
             #masthead-container {
-                opacity: 0 !important;
+                height: 0;
+                --masthead-opacity: 0;
+                opacity: var(--masthead-opacity) !important;
                 transition: opacity 300ms;
                 min-height: masthead-hoverable-height;
+                contain: layout size style;
             }
-            #masthead-container:not(:hover) > ytd-masthead {
-                display: none !important;
+            
+            #masthead-container > ytd-masthead {
+                transform: translateY(-100%);
+                transition: transform 300ms;
             }
             if masthead-hoverable-height > 0 {
 
+
                 #masthead-container:hover {
-                    opacity: 1 !important;
+                    --masthead-opacity: 1;
                 }
 
+                #masthead-container:hover > ytd-masthead {
+                    transform: translateY(0%);
+                }
+            
                 #masthead-container::after {
                     content: '';
                     display: flex;
                     width: 100%;
                     height: masthead-hoverable-height;
                     top: 0;
-                    z-index: 99999;
+                    z-index: 77;
+                    cursor: default;
+                    user-select: none !important;
+                    touch-action: none !important;
+                    box-sizing: border-box;
+                    padding: 0;
+                    margin: 0;
                 }
                 
             }

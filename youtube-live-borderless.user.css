@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.10
+@version        0.1.11
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -38,7 +38,11 @@
                 max-height: calc(100vh - 100px) !important;
             }
             #cinematics{
-                contain: layout;
+                // contain: layout;
+                contain: layout size style;
+                user-select: none;
+                touch-action: none;
+                pointer-events: none;
             }
         }
 

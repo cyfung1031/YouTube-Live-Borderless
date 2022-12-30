@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.16
+@version        0.1.17
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -165,9 +165,7 @@
             }
             #movie_player {
                 position: relative;
-
                 > .html5-video-container:has(video) {
-
                     top: 0;
                     bottom: 0;
                     left: 0;
@@ -188,6 +186,10 @@
                     max-width: 100%;
                     margin: 0 auto;
                 }
+                .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
+                    top: 0 !important;
+                }
+                
                 .ytp-iv-video-content {
                     width: 100% !important;
                     height: 100% !important;

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.12
+@version        0.1.13
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -15,17 +15,12 @@
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
+@var checkbox   no-round-border                 "No Round Border"                               1
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") 
-
     
     contentf(){
-        
-        
-        #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
-            width: side-panel-width;
-        }
         
         &:not([tabview-loaded]){
             
@@ -45,11 +40,8 @@
                 pointer-events: none;
             }
         }
-
         
         if no-masthead {
-
-            
             
             &,
             ytd-app,
@@ -86,7 +78,6 @@
                 
             }
             
-
             ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
 
                 #columns.style-scope.ytd-watch-flexy,
@@ -99,7 +90,6 @@
                 }
                 
             }
-            
 
             ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
 
@@ -225,6 +215,23 @@
         
         body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]){
             overflow-y: unset !important;
+        }
+        
+        
+        #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
+            width: side-panel-width;
+        }
+        
+        if no-round-border {
+
+            ytd-live-chat-frame[rounded-container], 
+            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame,
+            ytd-live-chat-frame[rounded-container] iframe.ytd-live-chat-frame,     
+            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next,
+            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next:hover {
+                border-radius: unset;
+            }
+
         }
         
     }

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.18
+@version        0.1.19
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -15,6 +15,7 @@
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
+@var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
 @var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                    0
 ==/UserStyle== */
 /*
@@ -295,6 +296,12 @@ chrome-bottom-bar-margin = 12px
 
             }
             
+        }
+        
+        if disable-cinematics {
+            #cinematics.ytd-watch-flexy {
+                display: none;
+            }
         }
         
     }

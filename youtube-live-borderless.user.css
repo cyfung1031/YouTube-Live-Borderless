@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.13
+@version        0.1.14
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -218,7 +218,7 @@
         }
         
         
-        #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
+        ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
             width: side-panel-width;
         }
         

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.22
+@version        0.1.23
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -127,6 +127,17 @@ chrome-bottom-bar-margin = 12px
                 
             }
             
+            
+        } else {
+
+            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+
+                #secondary.style-scope.ytd-watch-flexy,
+                #secondary-inner.style-scope.ytd-watch-flexy {
+                    height: calc(100vh - var(--ytd-toolbar-height));
+                    max-height: 100%;
+                }
+            }   
             
         }
                 
@@ -257,6 +268,8 @@ chrome-bottom-bar-margin = 12px
         }
         
         ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+            
+                
             ytd-live-chat-frame#chat:not([collapsed]){
                 min-height: unset;
             }

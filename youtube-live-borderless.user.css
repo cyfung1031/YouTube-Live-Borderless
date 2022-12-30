@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.11
+@version        0.1.12
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -222,6 +222,11 @@
             
         }
 
+        
+        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]){
+            overflow-y: unset !important;
+        }
+        
     }
     
     if apply-to-live-chat-only 

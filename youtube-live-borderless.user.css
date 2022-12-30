@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.17
+@version        0.1.18
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -10,7 +10,6 @@
 @var checkbox   apply-to-live-chat-only         "Apply to Live Chat Only"                       1
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
 @var range      masthead-hoverable-height       "Invisible MastHead Bar Height"                 [0, 0, 12, 2, "px"]
-@var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
@@ -18,6 +17,10 @@
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                    0
 ==/UserStyle== */
+/*
+@var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
+*/
+chrome-bottom-bar-margin = 12px
 
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") 
     

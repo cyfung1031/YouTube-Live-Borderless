@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.21
+@version        0.1.22
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -256,7 +256,11 @@ chrome-bottom-bar-margin = 12px
             
         }
         
-        
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+            ytd-live-chat-frame#chat:not([collapsed]){
+                min-height: unset;
+            }
+        }
 
         if min-below-area > 0 {
 

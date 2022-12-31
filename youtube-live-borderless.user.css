@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.23
+@version        0.1.24
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -209,8 +209,11 @@ chrome-bottom-bar-margin = 12px
                     max-width: 100%;
                     margin: 0 auto;
                 }
-                .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
-                    top: 0 !important;
+                
+                if no-masthead {
+                    .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
+                        top: 0 !important;
+                    }
                 }
                 
                 .ytp-iv-video-content {

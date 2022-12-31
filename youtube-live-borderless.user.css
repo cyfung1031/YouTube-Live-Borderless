@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.1.24
+@version        0.2.0
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -17,16 +17,146 @@
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
-@var checkbox   chat-fill-single-col-exp        "Fill up the chat area in single column view (experimental)"                    0
+@var select mode-for-single-col "Mode for Single Column" {
+  "YouTube Mobile (Recommended)": "mobile",
+  "Normal": "normal",
+  "Disabled": "disabled"
+}
 ==/UserStyle== */
 /*
+
+"Fill up Chat Area (experimental)": "chat-fill-up",
 @var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
 */
-chrome-bottom-bar-margin = 12px
 
-@-moz-document url-prefix("https://www.youtube.com/watch?v=") 
-    
+no-masthead-w = no-masthead //
+
+chrome-bottom-bar-margin = 12px // 
+disable-for-single-col = 0 // 
+if mode-for-single-col == "disabled" // 
+    disable-for-single-col = 1 // 
+chat-fill-single-col-exp = 0 // 
+if mode-for-single-col == "chat-fill-up" // 
+    chat-fill-single-col-exp = 1 // 
+single-col-mobile = 0
+if mode-for-single-col == "mobile" // 
+    single-col-mobile = 1 // 
+    no-masthead-w = 1
+
+
+@-moz-document url-prefix("https://www.youtube.com/watch?v=") // 
+    // 
     contentf(){
+        
+        if single-col-mobile {
+            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])){
+                
+
+                &:has(#chat:not([collapsed])) {
+
+                    #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy, 
+                    #below.ytd-watch-flexy > #related.ytd-watch-flexy,
+#below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy{
+                        display:none !important;
+                    }
+                    #secondary.ytd-watch-flexy  {
+                        display:none !important;
+                    }
+                    
+                    #chat:not([collapsed]) {
+                        --ytd-margin-2x: 0;
+                        --ytd-margin-4x: 0;
+                        --ytd-margin-6x: 0;
+                        --ytd-margin-8x: 0;
+                        height:100% !important;
+                        min-height: unset !important;
+                        max-height: 100vh !important;
+                    }
+                     
+
+                    .efyt-control-bar{
+                        position:relative; 
+                        display:inline-flex;
+                        top: auto;
+                        left: auto;
+                        z-index:99999;
+                        opacity: 0.8;
+                        transform:translate(calc(-100% + 32px), 0) !important;
+                    }
+                    .efyt-control-bar:hover{
+                        opacity: 1.0;
+                        background: var(--yt-spec-general-background-a);
+                        transform:translate(0px, 0) !important;
+                    }
+
+                    #player{
+                        margin-bottom:0;
+                    }
+                    
+                    #columns, #primary{
+                        padding:0;
+                    }
+                    
+                    #player,
+                    #player-theater-container,
+                     #player-container-outer,
+                    #player-container-inner,
+                    #player-container,
+                    #movie_player, #movie_player video{
+                        object-fit: contain;
+                        max-height:calc(100vh - 400px) !important;
+                    } 
+                    
+                    #primary-inner.ytd-watch-flexy > :not(.style-scope) {
+                        display:none !important;
+                    }
+                    
+                    
+                    #below > *:not(#chat) {
+                        display:none !important;
+                    }
+                    
+                    #below:not(:has(#chat)){
+                        display:none;
+                    }
+                    
+                    
+                    
+                    
+                    ytd-watch-flexy,
+                    #columns.ytd-watch-flexy,
+                    #primary.ytd-watch-flexy,
+                    #primary-inner.ytd-watch-flexy{
+                    display:flex;
+                    flex-direction:column;
+                    margin:0;
+                    flex:1;
+                    
+                    }
+                    #below{
+                        flex:1;
+                    }
+                    
+                    ytd-watch-flexy{
+                        height:100vh !important;
+                        max-height:100vh !important;
+                    }
+                    
+                    ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy, ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
+                        
+                    min-height: unset !important;
+                    }
+                        
+                    
+                    
+                    
+                        
+                    
+                    
+                }
+            
+            }
+        }
         
         &:not([tabview-loaded]){
             
@@ -47,7 +177,7 @@ chrome-bottom-bar-margin = 12px
             }
         }
         
-        if no-masthead {
+        if no-masthead-w {
             
             &,
             ytd-app,
@@ -210,7 +340,7 @@ chrome-bottom-bar-margin = 12px
                     margin: 0 auto;
                 }
                 
-                if no-masthead {
+                if no-masthead-w {
                     .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
                         top: 0 !important;
                     }
@@ -385,11 +515,20 @@ chrome-bottom-bar-margin = 12px
         }
         
     }
-    
-    if apply-to-live-chat-only 
-        html:has(iframe#chatframe)
-            contentf()
-    else
-        html
-            contentf()
+    // 
+    if apply-to-live-chat-only // 
+        if disable-for-single-col // 
+            html:has(ytd-watch-flexy[is-two-columns_] iframe#chatframe) // 
+                contentf() // 
+        else // 
+            html:has(iframe#chatframe) // 
+                contentf() // 
+    else // 
+        if disable-for-single-col // 
+            html:has(ytd-watch-flexy[is-two-columns_]) // 
+                contentf() // 
+        else // 
+            html // 
+                contentf() // 
+    // 
         

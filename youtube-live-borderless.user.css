@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.0
+@version        0.2.1
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -17,7 +17,7 @@
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
-@var select mode-for-single-col "Mode for Single Column" {
+@var select     mode-for-single-col             "Mode for Single Column" {
   "YouTube Mobile (Recommended)": "mobile",
   "Normal": "normal",
   "Disabled": "disabled"
@@ -27,148 +27,253 @@
 
 "Fill up Chat Area (experimental)": "chat-fill-up",
 @var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
+
+  Chrome Bottom Bar Margin is 12px only due to
+
+    MU = function(a) {
+        var b = a.u.ag()
+          , c = a.G.getVideoData().D
+          , d = 0;
+        a.u.ag() && a.u.Me() && (d = (a.G.fb().getPlayerSize().width - a.G.getVideoContentRect().width) / 2);
+        return 12 * (c ? 0 : b ? 2 : 1) + d
+    }
+
 */
 
-no-masthead-w = no-masthead //
+@-moz-document url-prefix("https://www.youtube.com/watch?v=") {
 
-chrome-bottom-bar-margin = 12px // 
-disable-for-single-col = 0 // 
-if mode-for-single-col == "disabled" // 
-    disable-for-single-col = 1 // 
-chat-fill-single-col-exp = 0 // 
-if mode-for-single-col == "chat-fill-up" // 
-    chat-fill-single-col-exp = 1 // 
-single-col-mobile = 0
-if mode-for-single-col == "mobile" // 
-    single-col-mobile = 1 // 
-    no-masthead-w = 1
+    dummy() { 
+        // dummy
+        border: 0; 
+    }
+
+    no-masthead-w=no-masthead //
+    chrome-bottom-bar-margin=12px // 
+    disable-for-single-col=0 // 
+    if mode-for-single-col=="disabled" {
+        disable-for-single-col=1 // 
+    }
+
+    chat-fill-single-col-exp=0 // 
+    if mode-for-single-col=="chat-fill-up" {
+        chat-fill-single-col-exp=1 //
+    }
+
+    single-col-mobile=0 //
+    if mode-for-single-col=="mobile" {
+        single-col-mobile=1 // 
+        if no-masthead==0 {
+            no-masthead-w=2 //
+        }
+    }
+    //
+    contentNoMasthead() {
+
+        &,
+        ytd-app,
+        ytd-page-manager[class].style-scope,
+        ytd-watch-flexy[class].style-scope {
+            /* 0px not 0 */
+            --ytd-masthead-height: 0px;
+            --ytd-toolbar-height: 0px;
+            --ytd-watch-flexy-masthead-height: 0px;
+        }
+
+        #masthead-container {
+            height: 0;
+            --masthead-opacity: 0;
+            opacity: var(--masthead-opacity) !important;
+            transition: opacity 300ms;
+            min-height: masthead-hoverable-height;
+            contain: layout size style;
+        }
+
+        #masthead-container > ytd-masthead {
+            transform: translateY(-100%);
+            transition: transform 300ms;
+        }
+
+        if masthead-hoverable-height > 0 {
 
 
-@-moz-document url-prefix("https://www.youtube.com/watch?v=") // 
-    // 
-    contentf(){
-        
+            #masthead-container:hover {
+                --masthead-opacity: 1;
+            }
+
+            #masthead-container:hover > ytd-masthead {
+                transform: translateY(0%);
+            }
+
+            #masthead-container::after {
+                content: '';
+                display: flex;
+                width: 100%;
+                height: masthead-hoverable-height;
+                top: 0;
+                z-index: 77;
+                cursor: default;
+                user-select: none !important;
+                touch-action: none !important;
+                box-sizing: border-box;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
+
+            #columns.style-scope.ytd-watch-flexy,
+            #primary.style-scope.ytd-watch-flexy,
+            #primary-inner.style-scope.ytd-watch-flexy,
+            #secondary.style-scope.ytd-watch-flexy,
+            #secondary-inner.style-scope.ytd-watch-flexy {
+                height: 100vh;
+                max-height: 100%;
+            }
+        }
+
+        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+
+            height: 100vh;
+            #player-theater-container.ytd-watch-flexy {
+                flex: 77;
+                max-height: unset;
+            }
+
+            #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
+                overflow: visible;
+            }
+        }
+
+
+        ytd-watch-flexy.style-scope:not([fullscreen]) {
+
+            #movie_player .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
+                top: 0 !important;
+            }
+        }
+    } // 
+    contentf() {
+
         if single-col-mobile {
-            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])){
-                
+            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
+
 
                 &:has(#chat:not([collapsed])) {
 
-                    #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy, 
+                    #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
                     #below.ytd-watch-flexy > #related.ytd-watch-flexy,
-#below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy{
+                    #below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy {
                         display:none !important;
                     }
-                    #secondary.ytd-watch-flexy  {
-                        display:none !important;
+
+                    #secondary.ytd-watch-flexy {
+                        display: none !important;
                     }
-                    
+
                     #chat:not([collapsed]) {
                         --ytd-margin-2x: 0;
                         --ytd-margin-4x: 0;
                         --ytd-margin-6x: 0;
                         --ytd-margin-8x: 0;
-                        height:100% !important;
+                        height: 100% !important;
                         min-height: unset !important;
                         max-height: 100vh !important;
                     }
-                     
 
-                    .efyt-control-bar{
-                        position:relative; 
-                        display:inline-flex;
+
+                    .efyt-control-bar {
+                        position: relative;
+                        display: inline-flex;
                         top: auto;
                         left: auto;
-                        z-index:99999;
+                        z-index: 99999;
                         opacity: 0.8;
-                        transform:translate(calc(-100% + 32px), 0) !important;
-                    }
-                    .efyt-control-bar:hover{
-                        opacity: 1.0;
-                        background: var(--yt-spec-general-background-a);
-                        transform:translate(0px, 0) !important;
+                        transform: translate(calc(-100% + 32px), 0) !important;
                     }
 
-                    #player{
-                        margin-bottom:0;
+                    .efyt-control-bar:hover {
+                        opacity: 1.0;
+                        background: var(--yt-spec-general-background-a);
+                        transform: translate(0px, 0) !important;
                     }
-                    
-                    #columns, #primary{
-                        padding:0;
+
+                    #player {
+                        margin-bottom: 0;
                     }
-                    
+
+                    #columns,
+                    #primary {
+                        padding: 0;
+                    }
+
                     #player,
                     #player-theater-container,
-                     #player-container-outer,
+                    #player-container-outer,
                     #player-container-inner,
                     #player-container,
-                    #movie_player, #movie_player video{
+                    #movie_player,
+                    #movie_player video {
                         object-fit: contain;
-                        max-height:calc(100vh - 400px) !important;
-                    } 
-                    
+                        max-height: calc(100vh - 400px) !important;
+                    }
+
                     #primary-inner.ytd-watch-flexy > :not(.style-scope) {
-                        display:none !important;
+                        display: none !important;
                     }
-                    
-                    
+
+
                     #below > *:not(#chat) {
-                        display:none !important;
+                        display: none !important;
                     }
-                    
-                    #below:not(:has(#chat)){
-                        display:none;
+
+                    #below:not(:has(#chat)) {
+                        display: none;
                     }
-                    
-                    
-                    
-                    
+
+
+
+
                     ytd-watch-flexy,
                     #columns.ytd-watch-flexy,
                     #primary.ytd-watch-flexy,
-                    #primary-inner.ytd-watch-flexy{
-                    display:flex;
-                    flex-direction:column;
-                    margin:0;
-                    flex:1;
-                    
+                    #primary-inner.ytd-watch-flexy {
+                        display: flex;
+                        flex-direction: column;
+                        margin: 0;
+                        flex: 1;
                     }
-                    #below{
-                        flex:1;
+
+                    #below {
+                        flex: 1;
                     }
-                    
-                    ytd-watch-flexy{
-                        height:100vh !important;
-                        max-height:100vh !important;
+
+                    ytd-watch-flexy {
+                        height: 100vh !important;
+                        max-height: 100vh !important;
                     }
-                    
-                    ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy, ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
-                        
-                    min-height: unset !important;
+
+                    ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy,
+                    ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
+
+                        min-height: unset !important;
                     }
-                        
-                    
-                    
-                    
-                        
-                    
-                    
                 }
-            
             }
         }
-        
-        &:not([tabview-loaded]){
-            
-            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy, 
+
+        &:not([tabview-loaded]) {
+
+            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
             #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy {
-                display:none !important;
+                display: none !important;
             }
 
-            #player-theater-container{
+            #player-theater-container {
                 max-height: calc(100vh - 100px) !important;
             }
-            #cinematics{
+
+            #cinematics {
                 // contain: layout;
                 contain: layout size style;
                 user-select: none;
@@ -176,89 +281,20 @@ if mode-for-single-col == "mobile" //
                 pointer-events: none;
             }
         }
-        
-        if no-masthead-w {
-            
-            &,
-            ytd-app,
-            ytd-page-manager[class].style-scope,
-            ytd-watch-flexy[class].style-scope {
-                /* 0px not 0 */
-                --ytd-masthead-height: 0px;
-                --ytd-toolbar-height: 0px;
-                --ytd-watch-flexy-masthead-height: 0px;
-            }
-            
-            #masthead-container {
-                height: 0;
-                --masthead-opacity: 0;
-                opacity: var(--masthead-opacity) !important;
-                transition: opacity 300ms;
-                min-height: masthead-hoverable-height;
-                contain: layout size style;
-            }
-            
-            #masthead-container > ytd-masthead {
-                transform: translateY(-100%);
-                transition: transform 300ms;
-            }
-            if masthead-hoverable-height > 0 {
 
+        if no-masthead-w==2 {
 
-                #masthead-container:hover {
-                    --masthead-opacity: 1;
-                }
-
-                #masthead-container:hover > ytd-masthead {
-                    transform: translateY(0%);
-                }
-            
-                #masthead-container::after {
-                    content: '';
-                    display: flex;
-                    width: 100%;
-                    height: masthead-hoverable-height;
-                    top: 0;
-                    z-index: 77;
-                    cursor: default;
-                    user-select: none !important;
-                    touch-action: none !important;
-                    box-sizing: border-box;
-                    padding: 0;
-                    margin: 0;
-                }
-                
+            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
+                contentNoMasthead()
             }
-            
-            ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
+        }
 
-                #columns.style-scope.ytd-watch-flexy,
-                #primary.style-scope.ytd-watch-flexy,
-                #primary-inner.style-scope.ytd-watch-flexy,
-                #secondary.style-scope.ytd-watch-flexy,
-                #secondary-inner.style-scope.ytd-watch-flexy {
-                    height: 100vh;
-                    max-height: 100%;
-                }
-                
-            }
+        else if no-masthead-w==1 {
 
-            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+            contentNoMasthead()
+        }
 
-                height:100vh; 
-                #player-theater-container.ytd-watch-flexy {
-                    flex: 77;
-                    max-height: unset;
-                    
-                }
-                #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
-                    overflow: visible;
-                }
-                
-            }
-            
-            
-        } else {
+        else {
 
             ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
 
@@ -267,18 +303,16 @@ if mode-for-single-col == "mobile" //
                     height: calc(100vh - var(--ytd-toolbar-height));
                     max-height: 100%;
                 }
-            }   
-            
+            }
         }
-                
-                       
+
+
 
         if no-bottom-row {
-            
+
             #bottom-row.ytd-watch-metadata {
                 display: none !important;
             }
-            
         }
 
         h1.ytd-watch-metadata {
@@ -286,7 +320,7 @@ if mode-for-single-col == "mobile" //
             --font-size: video-title-size;
             line-height: calc(var(--font-size) * 1.4);
         }
-        
+
         & {
             --ylb-min-below-area: min-below-area;
         }
@@ -299,23 +333,29 @@ if mode-for-single-col == "mobile" //
                 --ytd-margin-6y: var(--ytd-margin-6x);
                 --ytd-margin-8y: var(--ytd-margin-8x);
             }
+
             #columns.style-scope.ytd-watch-flexy {
                 --ytd-margin-2x: 0;
                 --ytd-margin-4x: 0;
                 --ytd-margin-6x: 0;
                 --ytd-margin-8x: 0;
             }
-            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy), #below, #player {
+
+            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy),
+            #below,
+            #player {
                 --ytd-margin-2x: var(--ytd-margin-2y);
                 --ytd-margin-4x: var(--ytd-margin-4y);
                 --ytd-margin-6x: var(--ytd-margin-6y);
                 --ytd-margin-8x: var(--ytd-margin-8y);
             }
+
             #secondary-inner.style-scope.ytd-watch-flexy {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
             }
+
             #movie_player {
                 position: relative;
                 > .html5-video-container:has(video) {
@@ -325,11 +365,13 @@ if mode-for-single-col == "mobile" //
                     right: 0;
                     position: absolute;
                 }
+
                 .ytp-chrome-bottom[style*="width"] {
                     width: unset !important;
                     left: chrome-bottom-bar-margin !important;
                     right: chrome-bottom-bar-margin !important;
                 }
+
                 .html5-video-container > video {
                     width: unset !important;
                     height: 100% !important;
@@ -339,24 +381,21 @@ if mode-for-single-col == "mobile" //
                     max-width: 100%;
                     margin: 0 auto;
                 }
-                
-                if no-masthead-w {
-                    .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
-                        top: 0 !important;
-                    }
-                }
-                
+
                 .ytp-iv-video-content {
                     width: 100% !important;
                     height: 100% !important;
                 }
+
                 .ytp-chapter-hover-container[style*="width"] {
                     width: 100% !important;
                 }
             }
+
             #chat:not([collapsed]) {
                 flex: 77;
             }
+
             #right-tabs {
                 display: flex;
                 margin: 0 !important;
@@ -372,38 +411,36 @@ if mode-for-single-col == "mobile" //
                     flex: 77;
                 }
             }
+
             &[is-two-columns_] #primary-inner > *:not(#player) {
                 padding: 0 primary-content-margin 0;
             }
+
             &:not([is-two-columns_]) #primary-inner > *:not(#player) {
                 padding: 0;
             }
-            
+
             &:not([is-two-columns_]) #primary-inner #below > *:not(ytd-live-chat-frame#chat) {
                 padding: 0 primary-content-margin 0;
             }
-            
+
             h1.style-scope.ytd-watch-metadata {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
                 align-items: center;
             }
-            
-            
+
+
             #player-container-outer.ytd-watch-flexy {
                 max-width: unset;
             }
-            
-
-
-            
         }
-        
+
         ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
-            
-                
-            ytd-live-chat-frame#chat:not([collapsed]){
+
+
+            ytd-live-chat-frame#chat:not([collapsed]) {
                 min-height: unset;
             }
         }
@@ -418,7 +455,6 @@ if mode-for-single-col == "mobile" //
                 #player #player-container.ytd-watch-flexy { // layout inside
                     max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px));
                 }
-
             }
 
             ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
@@ -426,13 +462,12 @@ if mode-for-single-col == "mobile" //
                 #player-theater-container.ytd-watch-flexy {
                     max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px));
                 }
-
             }
+        }
+
+        else {
 
 
-        } else {
-            
-            
             ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
 
                 #player #player-container-outer.ytd-watch-flexy,
@@ -440,7 +475,6 @@ if mode-for-single-col == "mobile" //
                 #player #player-container.ytd-watch-flexy {
                     max-height: calc(100vh - var(--ytd-toolbar-height, 0px)); // for very wide screen
                 }
-
             }
 
             ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
@@ -448,35 +482,32 @@ if mode-for-single-col == "mobile" //
                 #player-theater-container.ytd-watch-flexy {
                     max-height: calc(100vh - var(--ytd-toolbar-height, 0px)); // for 4:3 video
                 }
-
             }
-            
         }
 
-        
-        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]){
+
+        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]) {
             overflow-y: unset !important;
         }
-        
-        
+
+
         ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
             width: side-panel-width;
         }
-        
+
         if no-round-border {
 
-            ytd-live-chat-frame[rounded-container], 
+            ytd-live-chat-frame[rounded-container],
             ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame,
-            ytd-live-chat-frame[rounded-container] iframe.ytd-live-chat-frame,     
+            ytd-live-chat-frame[rounded-container] iframe.ytd-live-chat-frame,
             ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next,
             ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next:hover {
                 border-radius: unset;
             }
-
         }
-        
+
         if chat-fill-single-col-exp {
-            
+
             &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) {
 
                 #primary-inner.style-scope.ytd-watch-flexy {
@@ -485,7 +516,7 @@ if mode-for-single-col == "mobile" //
                     flex-direction: column;
                 }
 
-                #below.style-scope.ytd-watch-flexy{
+                #below.style-scope.ytd-watch-flexy {
                     flex-shrink: 1;
                     overflow: auto;
                     position: relative;
@@ -503,32 +534,38 @@ if mode-for-single-col == "mobile" //
                     left: 0;
                     top: 0;
                 }
-
             }
-            
         }
-        
+
         if disable-cinematics {
             #cinematics.ytd-watch-flexy {
                 display: none;
             }
         }
-        
+    } // 
+    script-enable-bits=apply-to-live-chat-only * 4 + disable-for-single-col * 2 //
+    // 
+    if script-enable-bits==6 { //
+        html:has(ytd-watch-flexy[is-two-columns_] iframe#chatframe) { //
+            contentf() //
+        } //
     }
-    // 
-    if apply-to-live-chat-only // 
-        if disable-for-single-col // 
-            html:has(ytd-watch-flexy[is-two-columns_] iframe#chatframe) // 
-                contentf() // 
-        else // 
-            html:has(iframe#chatframe) // 
-                contentf() // 
-    else // 
-        if disable-for-single-col // 
-            html:has(ytd-watch-flexy[is-two-columns_]) // 
-                contentf() // 
-        else // 
-            html // 
-                contentf() // 
-    // 
-        
+
+    else if script-enable-bits==4 { //
+        html:has(iframe#chatframe) { //
+            contentf() // 
+        } //
+    }
+
+    else if script-enable-bits==2 { //
+        html:has(ytd-watch-flexy[is-two-columns_]) { //
+            contentf() // 
+        } //
+    }
+
+    else { //
+        html { //
+            contentf() // 
+        }
+    }
+}

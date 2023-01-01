@@ -1,11 +1,16 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.1
+@version        0.2.2
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
 @author         CY Fung
 @supportURL     https://github.com/cyfung1031/YouTube-Live-Borderless/
+@compatible     edge Edge [Blink] >= 105; Stylus (Beta)
+@compatible     chrome Chrome >= 105; Stylus (Beta)
+@compatible     firefox FireFox >= 103; Stylus; layout.css.has-selector.enabled = true; note: some features might not be very stable!!
+@compatible     opera Opera >= 91; Stylus (Beta)
+@compatible     safari Safari >= 15.4; Stylus
 @preprocessor   stylus
 @var checkbox   apply-to-live-chat-only         "Apply to Live Chat Only"                       1
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
@@ -486,7 +491,7 @@
         }
 
 
-        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]) {
+        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]) {  // note: might not be supported by FireFox due to its bug
             overflow-y: unset !important;
         }
 
@@ -508,7 +513,7 @@
 
         if chat-fill-single-col-exp {
 
-            &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) {
+            &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) { // note: might not be supported by FireFox due to its bug
 
                 #primary-inner.style-scope.ytd-watch-flexy {
                     max-height: 100vh;
@@ -546,7 +551,7 @@
     script-enable-bits=apply-to-live-chat-only * 4 + disable-for-single-col * 2 //
     // 
     if script-enable-bits==6 { //
-        html:has(ytd-watch-flexy[is-two-columns_] iframe#chatframe) { //
+        html:has(ytd-watch-flexy[is-two-columns_]):has(iframe#chatframe) { //
             contentf() //
         } //
     }

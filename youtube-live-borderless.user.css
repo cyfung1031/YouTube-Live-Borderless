@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.2
+@version        0.2.3
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -12,7 +12,17 @@
 @compatible     opera Opera >= 91; Stylus (Beta)
 @compatible     safari Safari >= 15.4; Stylus
 @preprocessor   stylus
-@var checkbox   apply-to-live-chat-only         "Apply to Live Chat Only"                       1
+@var select     mode-for-two-col                "Mode for Two Columns" {
+  "Expanded Panel Only (Recommended)":  "expanded-panel",
+  "Expanded Live Chat Only":            "expanded-live",
+  "Expandable Live Chat Only":          "expandable-live",
+  "Always":                             "always"
+}
+@var select     mode-for-single-col             "Mode for Single Column" {
+  "YouTube Mobile (Recommended)":       "mobile",
+  "Normal":                             "normal",
+  "Disabled":                           "disabled"
+}
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
 @var range      masthead-hoverable-height       "Invisible MastHead Bar Height"                 [0, 0, 12, 2, "px"]
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
@@ -22,11 +32,6 @@
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
-@var select     mode-for-single-col             "Mode for Single Column" {
-  "YouTube Mobile (Recommended)": "mobile",
-  "Normal": "normal",
-  "Disabled": "disabled"
-}
 ==/UserStyle== */
 /*
 
@@ -53,16 +58,7 @@
     }
 
     no-masthead-w=no-masthead //
-    chrome-bottom-bar-margin=12px // 
-    disable-for-single-col=0 // 
-    if mode-for-single-col=="disabled" {
-        disable-for-single-col=1 // 
-    }
-
-    chat-fill-single-col-exp=0 // 
-    if mode-for-single-col=="chat-fill-up" {
-        chat-fill-single-col-exp=1 //
-    }
+    chrome-bottom-bar-margin=12px // this cannot be changed
 
     single-col-mobile=0 //
     if mode-for-single-col=="mobile" {
@@ -511,7 +507,7 @@
             }
         }
 
-        if chat-fill-single-col-exp {
+        if mode-for-single-col=="chat-fill-up" {
 
             &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) { // note: might not be supported by FireFox due to its bug
 
@@ -548,29 +544,51 @@
             }
         }
     } // 
-    script-enable-bits=apply-to-live-chat-only * 4 + disable-for-single-col * 2 //
-    // 
-    if script-enable-bits==6 { //
-        html:has(ytd-watch-flexy[is-two-columns_]):has(iframe#chatframe) { //
-            contentf() //
-        } //
-    }
+    
+    
+    contentg() {
+        
+        if mode-for-single-col=="disabled" {
+            &:has(ytd-watch-flexy[is-two-columns_]){
+                contentf()
 
-    else if script-enable-bits==4 { //
-        html:has(iframe#chatframe) { //
-            contentf() // 
-        } //
-    }
+            }
+        } else {
+            contentf()
 
-    else if script-enable-bits==2 { //
-        html:has(ytd-watch-flexy[is-two-columns_]) { //
-            contentf() // 
-        } //
+        }
+        
     }
-
-    else { //
+    
+    if mode-for-two-col == "expanded-panel" {
+        
+        html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe),
+        /*
+        html:has(ytd-engagement-panel-section-list-renderer[visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]:not([hidden])),
+        html:has(.tab-content-cld:not(.tab-content-hidden)),
+        */
+        html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]):not([theater])) {
+            contentg() //
+        }
+        
+    } else if mode-for-two-col == "expanded-live" {
+        
+        
+        html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe) {
+            contentg() //
+        }
+        
+    } else if mode-for-two-col == "expandable-live" {
+        
+        
+        html:has(ytd-live-chat-frame#chat):has(iframe#chatframe) {
+            contentg() //
+        }
+        
+    } else if mode-for-two-col == "always" {
+        
         html { //
-            contentf() // 
+            contentg() // 
         }
     }
 }

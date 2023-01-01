@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.3
+@version        0.2.4
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -24,7 +24,7 @@
   "Disabled":                           "disabled"
 }
 @var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
-@var range      masthead-hoverable-height       "Invisible MastHead Bar Height"                 [0, 0, 12, 2, "px"]
+@var number     masthead-hoverable-h            "MastHead Hoverable (1 = always hide)"          [4, 1, 8, 1]
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
@@ -56,6 +56,8 @@
         // dummy
         border: 0; 
     }
+    
+    masthead-hoverable-height=(masthead-hoverable-h - 1) * 2px
 
     no-masthead-w=no-masthead //
     chrome-bottom-bar-margin=12px // this cannot be changed

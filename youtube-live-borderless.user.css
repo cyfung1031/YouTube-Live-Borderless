@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.4
+@version        0.2.5
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -390,9 +390,12 @@
                     height: 100% !important;
                 }
 
+                /*
+                // this is buggy; eg multiple chapter hover container; can be fixed by YouTube Video Resize Fix Only
                 .ytp-chapter-hover-container[style*="width"] {
                     width: 100% !important;
                 }
+                */
             }
 
             #chat:not([collapsed]) {

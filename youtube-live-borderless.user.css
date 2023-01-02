@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.5
+@version        0.2.6
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -28,7 +28,7 @@
 @var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
 @var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
 @var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
-@var range      min-below-area                  "Minimum area below video (experimental)"       [0, 0, 160, 10, 'px']
+@var range      min-below-area                  "Minimum area below video"                      [120, 0, 240, 10, 'px']
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.3.1
+@version        0.3.2
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -315,6 +315,10 @@
     
     contentf() {
 
+        
+        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+            max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+        }
 
         &:not([tabview-loaded]) {
 

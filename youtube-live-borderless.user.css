@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.3.4
+@version        0.3.5
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -86,6 +86,12 @@
 
     
     content361(){
+        
+        
+        html {
+            --ylb-min-below-area: min-below-area;
+        }
+        
         // general fix
         ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy{
             min-height: unset;
@@ -310,6 +316,8 @@
             #primary {
                 padding: 0;
             }
+            
+            --ylb-min-below-area:  chat-min-height;
 
             #player,
             #player-theater-container,
@@ -319,7 +327,8 @@
             #movie_player,
             #movie_player video {
                 object-fit: contain;
-                max-height: 'calc(100vh - %s) !important' % chat-min-height; /* iframe min height unless zoomed */
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
+                
             }
 
             
@@ -380,9 +389,6 @@
     content2c() {
 
         
-        html {
-            --ylb-min-below-area: min-below-area;
-        }
         
         if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
             
@@ -513,6 +519,13 @@
         }
 
         &:not([tabview-loaded]) {
+            
+            body ytd-watch-flexy[flexy][is-two-columns_][is-extra-wide-video_] #primary.ytd-watch-flexy,
+            body ytd-watch-flexy[flexy][is-two-columns_][is-four-three-to-sixteen-nine-video_] #primary.ytd-watch-flexy {
+                
+                max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+            
+            }
 
             #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
             #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy {
@@ -520,7 +533,7 @@
             }
 
             ytd-watch-flexy:not([fullscreen]) #player-theater-container {
-                max-height: 'calc(100vh - var(--ytd-toolbar-height) - %s) !important' % min-below-area;
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
             
 

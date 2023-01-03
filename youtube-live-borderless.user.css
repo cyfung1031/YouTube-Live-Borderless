@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.9
+@version        0.3.0
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -72,6 +72,24 @@
     }
     
     chat-zoom-for-mobile-enable = ((chat-zoom-for-mobile < 1) or (chat-zoom-for-mobile > 1))
+
+    
+    content361(){
+        // general fix
+        ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy{
+            min-height: unset;
+        }
+        #movie_player .ytp-cued-thumbnail-overlay-image {
+            background-size: contain !important;
+        }
+        ytd-watch-flexy:not([is-two-columns_]) ytd-watch-metadata {
+            padding-top: var(--ytd-margin-3x);
+        }
+        ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]) #primary.ytd-watch-flexy {
+            padding-top: 0;
+            margin-top:0;
+        }
+    }
 
     //
     contentNoMasthead() {
@@ -294,6 +312,7 @@
         
         
     }
+    
     contentf() {
 
 
@@ -355,6 +374,26 @@
         & {
             --ylb-min-below-area: min-below-area;
         }
+        
+        ytd-watch-flexy[is-two-columns_]:not([fullscreen]) #movie_player {
+            
+            .ytp-chrome-bottom[style*="width"] {
+                width: unset !important;
+                left: chrome-bottom-bar-margin !important;
+                right: chrome-bottom-bar-margin !important;
+            }
+
+        }
+        
+        
+        ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]) #movie_player {
+            
+            .ytp-chrome-bottom[style*="width"] {
+                left: 50% !important;
+                transform: translateX(-50%);
+            }
+
+        }
 
         ytd-watch-flexy.style-scope:not([fullscreen]) {
 
@@ -395,12 +434,6 @@
                     left: 0;
                     right: 0;
                     position: absolute;
-                }
-
-                .ytp-chrome-bottom[style*="width"] {
-                    width: unset !important;
-                    left: chrome-bottom-bar-margin !important;
-                    right: chrome-bottom-bar-margin !important;
                 }
 
                 .html5-video-container > video {
@@ -582,6 +615,8 @@
         }
         
     }
+    
+    content361()
     
     if mode-for-two-col == "expanded-panel" {
         

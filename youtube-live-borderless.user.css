@@ -1,13 +1,13 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.8
+@version        0.2.9
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
 @author         CY Fung
 @supportURL     https://github.com/cyfung1031/YouTube-Live-Borderless/
 @compatible     edge Edge [Blink] >= 105; Stylus (Beta)
-@compatible     chrome Chrome >= 105; Stylus (Beta)
+@compatible     chrome Chrome >= 105; Stylus (Beta); Chrome 101-104 requires "enable-experimental-web-platform-features"
 @compatible     firefox FireFox >= 103; Stylus; layout.css.has-selector.enabled = true; note: some features might not be very stable!!
 @compatible     opera Opera >= 91; Stylus (Beta)
 @compatible     safari Safari >= 15.4; Stylus
@@ -32,6 +32,7 @@
 @var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "No Round Border"                               1
 @var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
+@var number     chat-zoom-for-mobile            "Chat Zoom for Mobile"  [1.0, 0.2, 1.8, 0.05]
 ==/UserStyle== */
 /*
 
@@ -69,6 +70,9 @@
             no-masthead-w=2 //
         }
     }
+    
+    chat-zoom-for-mobile-enable = ((chat-zoom-for-mobile < 1) or (chat-zoom-for-mobile > 1))
+
     //
     contentNoMasthead() {
 
@@ -156,114 +160,142 @@
             }
         }
     } // 
-    contentf() {
+        
+    contentSingleColMobile(){
+        // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]))
 
-        if single-col-mobile {
-            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
+        #chat:not([collapsed]) {
+            --ytd-margin-2x: 0;
+            --ytd-margin-4x: 0;
+            --ytd-margin-6x: 0;
+            --ytd-margin-8x: 0;
+            height: 100% !important;
+            min-height: unset !important;
+            max-height: 100vh !important;
 
-
-                &:has(#chat:not([collapsed])) {
-
-                    #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
-                    #below.ytd-watch-flexy > #related.ytd-watch-flexy,
-                    #below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy {
-                        display:none !important;
-                    }
-
-                    #secondary.ytd-watch-flexy {
-                        display: none !important;
-                    }
-
-                    #chat:not([collapsed]) {
-                        --ytd-margin-2x: 0;
-                        --ytd-margin-4x: 0;
-                        --ytd-margin-6x: 0;
-                        --ytd-margin-8x: 0;
-                        height: 100% !important;
-                        min-height: unset !important;
-                        max-height: 100vh !important;
-                    }
-
-
-                    .efyt-control-bar {
-                        position: relative;
-                        display: inline-flex;
-                        top: auto;
-                        left: auto;
-                        z-index: 99999;
-                        opacity: 0.8;
-                        transform: translate(calc(-100% + 32px), 0) !important;
-                    }
-
-                    .efyt-control-bar:hover {
-                        opacity: 1.0;
-                        background: var(--yt-spec-general-background-a);
-                        transform: translate(0px, 0) !important;
-                    }
-
-                    #player {
-                        margin-bottom: 0;
-                    }
-
-                    #columns,
-                    #primary {
-                        padding: 0;
-                    }
-
-                    #player,
-                    #player-theater-container,
-                    #player-container-outer,
-                    #player-container-inner,
-                    #player-container,
-                    #movie_player,
-                    #movie_player video {
-                        object-fit: contain;
-                        max-height: calc(100vh - 400px) !important;
-                    }
-
-                    #primary-inner.ytd-watch-flexy > :not(.style-scope) {
-                        display: none !important;
-                    }
-
-
-                    #below > *:not(#chat) {
-                        display: none !important;
-                    }
-
-                    #below:not(:has(#chat)) {
-                        display: none;
-                    }
+            --single-col-mobile-below-inside-display: flex;
 
 
 
+            if chat-zoom-for-mobile-enable {
 
-                    ytd-watch-flexy,
-                    #columns.ytd-watch-flexy,
-                    #primary.ytd-watch-flexy,
-                    #primary-inner.ytd-watch-flexy {
-                        display: flex;
-                        flex-direction: column;
-                        margin: 0;
-                        flex: 1;
-                    }
 
-                    #below {
-                        flex: 1;
-                    }
-
-                    ytd-watch-flexy {
-                        height: 100vh !important;
-                        max-height: 100vh !important;
-                    }
-
-                    ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy,
-                    ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
-
-                        min-height: unset !important;
-                    }
+               iframe#chatframe {
+                    iframe-transform = 'scale(%s)' % chat-zoom-for-mobile
+                    iframe-ratio = 100% / chat-zoom-for-mobile
+                    transform:  iframe-transform;
+                    height: iframe-ratio;
+                    position: absolute;
+                    /* max-height: unset !important; */
+                    transform-origin: 0 0;
+                    width: iframe-ratio;
                 }
+
+
+            }
+
+
+        }
+
+        &:has(#chat:not([collapsed])) {
+
+            #contentContainer.tp-yt-app-drawer[swipe-open].tp-yt-app-drawer::after {
+
+                content: unset;
+
+            }
+
+            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
+            #below.ytd-watch-flexy > #related.ytd-watch-flexy,
+            #below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy {
+                display:none !important;
+            }
+
+            #secondary.ytd-watch-flexy {
+                display: none !important;
+            }
+
+
+
+            .efyt-control-bar {
+                position: relative;
+                display: inline-flex;
+                top: auto;
+                left: auto;
+                z-index: 99999;
+                opacity: 0.8;
+                transform: translate(calc(-100% + 32px), 0) !important;
+            }
+
+            .efyt-control-bar:hover {
+                opacity: 1.0;
+                background: var(--yt-spec-general-background-a);
+                transform: translate(0px, 0) !important;
+            }
+
+            #player {
+                margin-bottom: 0;
+            }
+
+            #columns,
+            #primary {
+                padding: 0;
+            }
+
+            #player,
+            #player-theater-container,
+            #player-container-outer,
+            #player-container-inner,
+            #player-container,
+            #movie_player,
+            #movie_player video {
+                object-fit: contain;
+                max-height: calc(100vh - 400px) !important;
+            }
+
+            #primary-inner.ytd-watch-flexy > :not(.style-scope) {
+                display: none !important;
+            }
+
+
+            #below > * {
+                display: var(--single-col-mobile-below-inside-display) !important;
+            }
+
+            #below:not(:has(#chat)) {
+                display: none;
+            }
+
+            ytd-watch-flexy,
+            #columns.ytd-watch-flexy,
+            #primary.ytd-watch-flexy,
+            #primary-inner.ytd-watch-flexy {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                flex: 1;
+            }
+
+            #below {
+                flex: 1;
+            }
+
+            ytd-watch-flexy {
+                height: 100vh !important;
+                max-height: 100vh !important;
+            }
+
+            ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy,
+            ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
+
+                min-height: unset !important;
             }
         }
+        
+        
+    }
+    contentf() {
+
 
         &:not([tabview-loaded]) {
 
@@ -285,14 +317,10 @@
             }
         }
 
+
         if no-masthead-w==2 {
-
-            &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
-                contentNoMasthead()
-            }
-        }
-
-        else if no-masthead-w==1 {
+            // 
+        } else if no-masthead-w==1 {
 
             contentNoMasthead()
         }
@@ -548,11 +576,9 @@
         if mode-for-single-col=="disabled" {
             &:has(ytd-watch-flexy[is-two-columns_]){
                 contentf()
-
             }
         } else {
             contentf()
-
         }
         
     }
@@ -588,4 +614,21 @@
             contentg() // 
         }
     }
+    
+
+    if single-col-mobile {
+        
+        html {
+            --single-col-mobile-below-inside-display: none;
+        }
+        
+        &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
+
+            if no-masthead-w==2 {
+                contentNoMasthead()
+            }
+            contentSingleColMobile()
+        }
+    }
+    
 }

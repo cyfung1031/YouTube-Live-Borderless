@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.2.7
+@version        0.2.8
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -429,14 +429,6 @@
             &:not([is-two-columns_]) #primary-inner #below > *:not(ytd-live-chat-frame#chat) {
                 padding: 0 primary-content-margin 0;
             }
-
-            h1.style-scope.ytd-watch-metadata {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                align-items: center;
-            }
-
 
             #player-container-outer.ytd-watch-flexy {
                 max-width: unset;

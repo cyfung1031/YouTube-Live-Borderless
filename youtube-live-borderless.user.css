@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.3.6
+@version        0.3.7
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -97,7 +97,8 @@
             min-height: unset;
         }
         #movie_player .ytp-cued-thumbnail-overlay-image {
-            background-size: contain !important;
+            /* background-size: contain !important; */
+            background-size: auto 100% !important;
         }
         ytd-watch-flexy:not([is-two-columns_]) ytd-watch-metadata {
             padding-top: var(--ytd-margin-3x);

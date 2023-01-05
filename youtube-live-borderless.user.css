@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.3.7
+@version        0.4.0
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -12,30 +12,31 @@
 @compatible     opera Opera >= 91; Stylus (Beta)
 @compatible     safari Safari >= 15.4; Stylus
 @preprocessor   stylus
-@var select     mode-for-two-col                "Mode for Two Columns" {
-  "Expanded Panel Only (Recommended)":  "expanded-panel",
+@var select     mode-for-two-col                "Mode ##TwoColumns" {
+  "Expanded Panel Only #Recommended":  "expanded-panel",
   "Expanded Live Chat Only":            "expanded-live",
   "Expandable Live Chat Only":          "expandable-live",
   "Always":                             "always"
 }
-@var select     mode-for-single-col             "Mode for Single Column" {
-  "YT Mobile (Recommended)":       "mobile",
+@var select     mode-for-single-col             "Mode ##SingleColumn" {
+  "YT Mobile #Recommended":       "mobile",
   "Normal":                             "normal",
   "Disabled":                           "disabled"
 }
-@var checkbox   no-masthead                     "Hide Top Masthead Bar"                         0
-@var number     masthead-hoverable-h            "MastHead Hoverable (1 = always hide)"          [4, 1, 8, 1]
-@var checkbox   disable-cinematics              "Disable Cinematics Effect"                     0
-@var range      primary-content-margin          "Primary Content Margin"                        [24, 6, 48, 6, "px"]
-@var range      video-title-size                "Video Title Size"                              [2.0, 1.0, 3.0, 0.2, "rem"]
-@var checkbox   no-bottom-row                   "Hide Primary MetaInfo Bottom Row"              0
-@var range      min-below-area                  "Minimum area below video [10px = disable]"     [120, 10, 240, 10, 'px']
-@var number     side-panel-width                "Side Panel Width"                              [440, 320, 640, 20, "px"]
-@var checkbox   no-round-border                 "No Round Border"                               1
-@var number     chat-zoom-for-right-col         "Chat Zoom for Right Column"                    [1.0, 0.4, 1.2, 0.05]
-@var range      chat-btn-height                 "Top Space for ShowAndHide Btn (for Chat Zoom) [4px = disable]"     [36, 4, 60, 4, 'px']
-@var number     chat-zoom-for-mobile            "Chat Zoom for Mobile"                          [1.0, 0.4, 1.2, 0.05]
-@var range      chat-min-height                 "Minimum Chat Height (for YT Mobile)"          [400, 20, 900, 10, 'px']
+@var checkbox   no-masthead                     "Top.MastheadBar ::Hide"                            0
+@var number     masthead-hoverable-h            "Top.MastheadBar ::Hoverable >>>1_alwaysHide"       [4, 1, 8, 1]
+@var checkbox   disable-cinematics              "CinematicsEffect ::Disable"                        0
+@var range      primary-content-margin          "PrimaryContent ::Margin"                           [24, 6, 48, 6, "px"]
+@var range      video-title-size                "VideoTitle ::Size"                                 [2.0, 1.0, 3.0, 0.2, "rem"]
+@var checkbox   no-bottom-row                   "Bottom.PrimaryMetaInfoRow ::Hide"                  0
+@var range      min-below-area                  "BelowArea ::Minimum >>>10px_disable"               [120, 10, 240, 10, 'px']
+@var range      min-below-area-for-theater      "WideTheater.BelowArea ::Minimum >>>10px_disable"   [120, 10, 240, 10, 'px']
+@var number     side-panel-width                "SidePanel ::Width"                                 [440, 320, 640, 20, "px"]
+@var checkbox   no-round-border                 "RoundBorder ::Disable"                             1
+@var number     chat-zoom-for-right-col         "RightCol.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
+@var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom >>>4px_disable"    [36, 4, 60, 4, 'px']
+@var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
+@var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
 ==/UserStyle== */
 /*
 
@@ -63,6 +64,9 @@
 
     if min-below-area <= 10px {
         min-below-area = 0px
+    }
+    if min-below-area-for-theater <= 10px {
+        min-below-area-for-theater = 0px
     }
     chat-btn-height = chat-btn-height + 1px
     if chat-btn-height == 4px + 1px {
@@ -112,6 +116,8 @@
     //
     contentNoMasthead() {
 
+        // root = html
+        
         &,
         ytd-app,
         ytd-page-manager[class].style-scope,
@@ -183,10 +189,19 @@
                 max-height: unset;
             }
 
+             
+        }
+        
+        
+        
+        &:not([tabview-loaded]) ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+ 
+            
             #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
                 overflow: visible;
             }
         }
+
 
 
         ytd-watch-flexy.style-scope:not([fullscreen]) {
@@ -561,6 +576,31 @@
         } else if no-masthead-w==1 {
 
             contentNoMasthead()
+        }
+        
+        
+        
+        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
+            --ylb-min-below-area: 30px;
+        }
+        
+        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
+            
+            --ylb-min-below-area: min-below-area-for-theater;
+            
+            
+            #player,
+            #player-theater-container,
+            #player-container-outer,
+            #player-container-inner,
+            #player-container,
+            #movie_player,
+            #movie_player video { 
+                object-fit: contain;
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
+                
+                
+            }
         }
 
 

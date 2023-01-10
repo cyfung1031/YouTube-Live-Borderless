@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.0
+@version        0.4.1
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -26,6 +26,7 @@
 @var checkbox   no-masthead                     "Top.MastheadBar ::Hide"                            0
 @var number     masthead-hoverable-h            "Top.MastheadBar ::Hoverable >>>1_alwaysHide"       [4, 1, 8, 1]
 @var checkbox   disable-cinematics              "CinematicsEffect ::Disable"                        0
+@var range      video-enlarging                 "Video.Enlarging >>>Video.Border.Fine.Tune"       [0, 0, 8, 2]
 @var range      primary-content-margin          "PrimaryContent ::Margin"                           [24, 6, 48, 6, "px"]
 @var range      video-title-size                "VideoTitle ::Size"                                 [2.0, 1.0, 3.0, 0.2, "rem"]
 @var checkbox   no-bottom-row                   "Bottom.PrimaryMetaInfoRow ::Hide"                  0
@@ -91,7 +92,6 @@
     
     content361(){
         
-        
         html {
             --ylb-min-below-area: min-below-area;
         }
@@ -111,6 +111,7 @@
             padding-top: 0;
             margin-top:0;
         }
+
     }
 
     //
@@ -203,13 +204,6 @@
         }
 
 
-
-        ytd-watch-flexy.style-scope:not([fullscreen]) {
-
-            #movie_player .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
-                top: 0 !important;
-            }
-        }
     } // 
         
         #microformat.ytd-watch-flexy{
@@ -569,6 +563,15 @@
             }
             
         }
+        
+        if video-enlarging > 0 {
+         
+            ytd-watch-flexy:not([theater]):not([fullscreen]) #movie_player video[src] {
+                transform: 'scale(%s)' % (video-enlarging / 1000 + 1) ;
+                transform-origin: 50% 50%;
+            }
+            
+        }
 
 
         if no-masthead-w==2 {
@@ -580,9 +583,7 @@
         
         
         
-        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
-            --ylb-min-below-area: 30px;
-        }
+        
         
         ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
             
@@ -598,8 +599,6 @@
             #movie_player video { 
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
-                
-                
             }
         }
 
@@ -682,7 +681,13 @@
                     width: 100% !important;
                 }
                 */
+                
+                .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
+                    top: 0 !important;
+                }
+
             }
+            
 
             #chat:not([collapsed]) {
                 flex: 77;

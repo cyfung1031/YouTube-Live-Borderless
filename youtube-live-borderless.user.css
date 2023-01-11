@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.1
+@version        0.4.2
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -41,7 +41,6 @@
 ==/UserStyle== */
 /*
 
-"Fill up Chat Area (experimental)": "chat-fill-up",
 @var range      chrome-bottom-bar-margin        "Chrome Bottom Bar Margin"                      [12, 6, 48, 6, "px"]
 
   Chrome Bottom Bar Margin is 12px only due to
@@ -74,16 +73,16 @@
         chat-btn-height = 0px
     }
     
-    masthead-hoverable-height=(masthead-hoverable-h - 1) * 2px
+    masthead-hoverable-height = (masthead-hoverable-h - 1) * 2px
 
-    no-masthead-w=no-masthead //
-    chrome-bottom-bar-margin=12px // this cannot be changed
+    no-masthead-w = no-masthead //
+    chrome-bottom-bar-margin = 12px // this cannot be changed
 
-    single-col-mobile=0 //
-    if mode-for-single-col=="mobile" {
-        single-col-mobile=1 // 
-        if no-masthead==0 {
-            no-masthead-w=2 //
+    single-col-mobile = 0 //
+    if mode-for-single-col == "mobile" {
+        single-col-mobile = 1 // 
+        if no-masthead == 0 {
+            no-masthead-w = 2 //
         }
     }
     
@@ -109,7 +108,7 @@
         }
         ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]) #primary.ytd-watch-flexy {
             padding-top: 0;
-            margin-top:0;
+            margin-top: 0;
         }
 
     }
@@ -120,9 +119,7 @@
         // root = html
         
         &,
-        ytd-app,
-        ytd-page-manager[class].style-scope,
-        ytd-watch-flexy[class].style-scope {
+        & :is(ytd-app,/ ytd-page-manager[class].style-scope,/ ytd-watch-flexy[class].style-scope) {
             /* 0px not 0 */
             --ytd-masthead-height: 0px;
             --ytd-toolbar-height: 0px;
@@ -206,23 +203,14 @@
 
     } // 
         
-        #microformat.ytd-watch-flexy{
-            position: fixed;
-            top:-200vh;
-            left:-200vw;
-        }
+    #microformat.ytd-watch-flexy{
+        position: fixed;
+        top:-200vh;
+        left:-200vw;
+    }
         
     contentSingleColMobile(){
         // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]))
-        
-
-        &:has(#chat:not([collapsed])){
-            
-            
-            #primary-inner{
-                // display:block !important;
-            }
-        }
         
         #chat:not([collapsed]) {
             --ytd-margin-2x: 0;
@@ -250,20 +238,21 @@
             if chat-zoom-for-mobile-enable {
 
 
-               iframe#chatframe {
-                   position:absolute;
-                   
-                    iframe-transform = 'scale(%s)' % chat-zoom-for-mobile
-                    iframe-ratio = 100% / chat-zoom-for-mobile
+                iframe-transform = 'scale(%s)' % chat-zoom-for-mobile
+                iframe-ratio = 100% / chat-zoom-for-mobile
+
+                iframe#chatframe {
+                    position:absolute;
+
                     transform:  iframe-transform;
                     height: s('calc((100% - %s) / %s) !important', chat-btn-height, chat-zoom-for-mobile); 
-                     max-height: unset !important; 
-                     min-height: unset !important; 
+                    max-height: unset !important; 
+                    min-height: unset !important; 
                     transform-origin: 0 0;
                     width: iframe-ratio !important;
-                    margin-top:chat-btn-height;
-                    
-                    
+                    margin-top: chat-btn-height;
+
+
                 }
 
 
@@ -281,8 +270,7 @@
             }
          
             #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
-            #below.ytd-watch-flexy > #related.ytd-watch-flexy,
-            #below.ytd-watch-flexy > ytd-watch-metadata.ytd-watch-flexy {
+            #below.ytd-watch-flexy > .ytd-watch-flexy:is(#related,/ ytd-watch-metadata) {
                /* display:none !important; */
                 position: fixed !important;
                 transform: scale(0.01) !important;
@@ -322,20 +310,13 @@
                 margin-bottom: 0;
             }
 
-            #columns,
-            #primary {
+            :is(#columns,/ #primary) {
                 padding: 0;
             }
             
             --ylb-min-below-area:  chat-min-height;
 
-            #player,
-            #player-theater-container,
-            #player-container-outer,
-            #player-container-inner,
-            #player-container,
-            #movie_player,
-            #movie_player video {
+            :is(#player,/ #player-theater-container,/ #player-container-outer,/ #player-container-inner,/ #player-container,/ #movie_player,/ #movie_player video) {
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
                 
@@ -366,10 +347,7 @@
 
             
 
-            ytd-watch-flexy,
-            #columns.ytd-watch-flexy,
-            #primary.ytd-watch-flexy,
-            #primary-inner.ytd-watch-flexy {
+            :is(ytd-watch-flexy,/ #columns.ytd-watch-flexy,/ #primary.ytd-watch-flexy,/ #primary-inner.ytd-watch-flexy) {
                 display: flex;
                 flex-direction: column;
                 margin: 0;
@@ -385,8 +363,7 @@
                 max-height: 100vh !important;
             }
 
-            ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy,
-            ytd-watch-flexy[fullscreen] #player-theater-container.ytd-watch-flexy {
+            ytd-watch-flexy:is([theater],/ [fullscreen]) #player-theater-container.ytd-watch-flexy {
 
                 min-height: unset !important;
             }
@@ -401,22 +378,6 @@
         
         
         if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
-            
-            /*
-
-            ytd-watch-flexy[is-two-columns_]:not([fullscreen]) #secondary-inner.ytd-watch-flexy {
-
-                transform: 'scale(%s)' % chat-zoom-for-right-col;
-                transform-origin: 0 0;
-                width: '%s !important' % (100% / chat-zoom-for-right-col);
-                max-width: unset !important;
-                height: '%s !important' % (100% / chat-zoom-for-right-col);
-
-            }
-            
-            */
-            
-            
             
             ytd-watch-flexy[is-two-columns_]:not([fullscreen]) iframe#chatframe {
                 
@@ -439,14 +400,11 @@
             // 
         } else if no-masthead-w==1 {
             // 
-        }
-
-        else {
+        } else {
 
             ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
 
-                #secondary.style-scope.ytd-watch-flexy,
-                #secondary-inner.style-scope.ytd-watch-flexy {
+                .style-scope.ytd-watch-flexy:is(#secondary,/ #secondary-inner) {
                     height: calc(100vh - var(--ytd-toolbar-height));
                     max-height: 100%;
                 }
@@ -475,40 +433,34 @@
         }
 
         
-        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
-
-
-            ytd-live-chat-frame#chat:not([collapsed]) {
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) ytd-live-chat-frame#chat:not([collapsed]) {
                 min-height: unset;
-            }
         }
 
         
 
-        ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]) #primary-inner > *:not(#player) {
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]) #primary-inner.ytd-watch-flexy > *:not(#player) {
                 padding: 0 primary-content-margin 0;
         }
 
 
-        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) #player 
+        .ytd-watch-flexy:is(#player-container-outer,/ #player-container-inner,/ #player-container){
 
-            #player #player-container-outer.ytd-watch-flexy, // layout outside
-            #player #player-container-inner.ytd-watch-flexy, // no effect
-            #player #player-container.ytd-watch-flexy { // layout inside
+            // layout outside
+             // no effect
+             // layout inside
                 max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for very wide screen
-            }
         }
 
-        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
-
-            #player-theater-container.ytd-watch-flexy {
+        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) #player-theater-container.ytd-watch-flexy {
                 max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for 4:3 video
-            }
+           
         }
 
         
 
-        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_] #columns.ytd-watch-flexy #primary-inner.ytd-watch-flexy #player #movie_player video[src]) {  // note: might not be supported by FireFox due to its bug
+        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_]):has(#movie_player) {
             overflow-y: unset !important;
         }
 
@@ -522,6 +474,7 @@
     }
 
     contentf() {
+        // html
 
         
         body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
@@ -530,15 +483,13 @@
 
         &:not([tabview-loaded]) {
             
-            body ytd-watch-flexy[flexy][is-two-columns_][is-extra-wide-video_] #primary.ytd-watch-flexy,
-            body ytd-watch-flexy[flexy][is-two-columns_][is-four-three-to-sixteen-nine-video_] #primary.ytd-watch-flexy {
+            body ytd-watch-flexy[flexy][is-two-columns_]:is([is-extra-wide-video_],/ [is-four-three-to-sixteen-nine-video_]) #primary.ytd-watch-flexy{
                 
                 max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
             
             }
 
-            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
-            #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy {
+            :is(#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,/ #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy) {
                 display: none !important;
             }
 
@@ -555,11 +506,8 @@
                 pointer-events: none;
             }
             
-            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]){
-
-                #columns, #primary, #primary-inner, #secondary, #secondary-inner {
-                    height: calc(100vh - var(--ytd-toolbar-height));
-                }
+            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) :is(#columns,/ #primary,/ #primary-inner,/ #secondary,/ #secondary-inner) {
+                height: calc(100vh - var(--ytd-toolbar-height));
             }
             
         }
@@ -590,13 +538,7 @@
             --ylb-min-below-area: min-below-area-for-theater;
             
             
-            #player,
-            #player-theater-container,
-            #player-container-outer,
-            #player-container-inner,
-            #player-container,
-            #movie_player,
-            #movie_player video { 
+            :is(#player,/ #player-theater-container,/ #player-container-outer,/ #player-container-inner,/ #player-container,/ #movie_player,/ #movie_player video) { 
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
@@ -699,8 +641,7 @@
                 flex: 1;
                 flex-direction: column;
 
-                #material-tabs,
-                .tab-content {
+                :is(#material-tabs,/ .tab-content) {
                     outline: 0;
                 }
 
@@ -744,95 +685,45 @@
             }
         }
     } // 
-
-    contentCFU() {
- 
-
-        &:has(#below > #chat:not([collapsed])):not([tabview-loaded]) { // note: might not be supported by FireFox due to its bug
-
-            #primary-inner.style-scope.ytd-watch-flexy {
-                max-height: 100vh;
-                display: flex;
-                flex-direction: column;
-            }
-
-            #below.style-scope.ytd-watch-flexy {
-                flex-shrink: 1;
-                overflow: auto;
-                position: relative;
-                padding-top: 100%;
-            }
-
-            #below.style-scope.ytd-watch-flexy > #chat.style-scope.ytd-watch-flexy:not([collapsed]) {
-                margin: 0;
-                min-height: unset;
-                height: auto;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                top: 0;
-            }
-        }
-
-
-
-    }
     
     
     contentg() {
-        
 
-        content2c()
+        content2c() //
         
-        if mode-for-single-col=="disabled" {
-            &:has(ytd-watch-flexy[is-two-columns_]){
-                contentf()
-            }
-        } else {
-            contentf()
-            if mode-for-single-col=="chat-fill-up" {
-                contentCFU()
-            }
-        }
+        selector-g = '&' //
+        
+        if mode-for-single-col=="disabled" { //
+            selector-g = '&:has(ytd-watch-flexy[is-two-columns_])' //
+        } //
+            
+        {s(selector-g)} { //
+            // html
+            contentf() //
+        } //
         
     }
     
-    content361()
+    content361() //
     
-       
+    selectors-2col = { //
+         "expanded-panel": join(', ', 
+             "html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)", 
+             "html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]):not([theater]))"
+         ),
+         "expanded-live": "html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)",
+         "expandable-live": "html:has(ytd-live-chat-frame#chat):has(iframe#chatframe)",
+         "always": "html"
+     } //
     
-    if mode-for-two-col == "expanded-panel" {
-        
-        html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe),
-        /*
-        html:has(ytd-engagement-panel-section-list-renderer[visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]:not([hidden])),
-        html:has(.tab-content-cld:not(.tab-content-hidden)),
-        */
-        html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]):not([theater])) {
+    selector-2col = selectors-2col[mode-for-two-col]
+    selectors-k = split(', ', selector-2col)
+    for selector-k in selectors-k {
+     
+        {s(selector-k)} {
             contentg() //
         }
         
-    } else if mode-for-two-col == "expanded-live" {
-        
-        
-        html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe) {
-            contentg() //
-        }
-        
-    } else if mode-for-two-col == "expandable-live" {
-        
-        
-        html:has(ytd-live-chat-frame#chat):has(iframe#chatframe) {
-            contentg() //
-        }
-        
-    } else if mode-for-two-col == "always" {
-        
-        html { //
-            contentg() // 
-        }
     }
     
 

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.3
+@version        0.4.4
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -61,6 +61,11 @@
         // dummy
         border: 0; 
     }
+    
+    buildL4(type, args...) {
+        st1 = join('', ':', type, '(', join('\, ', args), ')')
+        selector(st1)
+    }
 
     if min-below-area <= 10px {
         min-below-area = 0px
@@ -119,12 +124,14 @@
         // root = html
         
         &,
-        & :is(ytd-app,/ ytd-page-manager[class].style-scope,/ ytd-watch-flexy[class].style-scope) {
+        & {buildL4('is', 'ytd-app', 'ytd-page-manager[class].style-scope', 'ytd-watch-flexy[class].style-scope')} {
             /* 0px not 0 */
             --ytd-masthead-height: 0px;
             --ytd-toolbar-height: 0px;
             --ytd-watch-flexy-masthead-height: 0px;
         }
+        
+        
 
         #masthead-container {
             height: 0;
@@ -270,7 +277,7 @@
             }
          
             #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
-            #below.ytd-watch-flexy > .ytd-watch-flexy:is(#related,/ ytd-watch-metadata) {
+            #below.ytd-watch-flexy > .ytd-watch-flexy{buildL4('is', '#related', 'ytd-watch-metadata')} {
                /* display:none !important; */
                 position: fixed !important;
                 transform: scale(0.01) !important;
@@ -310,13 +317,13 @@
                 margin-bottom: 0;
             }
 
-            :is(#columns,/ #primary) {
+            {buildL4('is', '#columns', '#primary')} {
                 padding: 0;
             }
             
             --ylb-min-below-area:  chat-min-height;
 
-            :is(#player,/ #player-theater-container,/ #player-container-outer,/ #player-container-inner,/ #player-container,/ #movie_player,/ #movie_player video) {
+            {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} {
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
                 
@@ -347,7 +354,7 @@
 
             
 
-            :is(ytd-watch-flexy,/ #columns.ytd-watch-flexy,/ #primary.ytd-watch-flexy,/ #primary-inner.ytd-watch-flexy) {
+            {buildL4('is', 'ytd-watch-flexy', '#columns.ytd-watch-flexy', '#primary.ytd-watch-flexy', '#primary-inner.ytd-watch-flexy')} {
                 display: flex;
                 flex-direction: column;
                 margin: 0;
@@ -363,7 +370,7 @@
                 max-height: 100vh !important;
             }
 
-            ytd-watch-flexy:is([theater],/ [fullscreen]) #player-theater-container.ytd-watch-flexy {
+            ytd-watch-flexy{buildL4('is', '[theater]', '[fullscreen]')} #player-theater-container.ytd-watch-flexy {
 
                 min-height: unset !important;
             }
@@ -404,7 +411,7 @@
 
             ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
 
-                .style-scope.ytd-watch-flexy:is(#secondary,/ #secondary-inner) {
+                .style-scope.ytd-watch-flexy{buildL4('is', '#secondary', '#secondary-inner')} {
                     height: calc(100vh - var(--ytd-toolbar-height));
                     max-height: 100%;
                 }
@@ -445,7 +452,7 @@
 
 
         ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) #player 
-        .ytd-watch-flexy:is(#player-container-outer,/ #player-container-inner,/ #player-container){
+        .ytd-watch-flexy{buildL4('is', '#player-container-outer', '#player-container-inner', '#player-container')}{
 
             // layout outside
              // no effect
@@ -483,13 +490,15 @@
 
         &:not([tabview-loaded]) {
             
-            body ytd-watch-flexy[flexy][is-two-columns_]:is([is-extra-wide-video_],/ [is-four-three-to-sixteen-nine-video_]) #primary.ytd-watch-flexy{
+            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy{
                 
                 max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
             
             }
 
-            :is(#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,/ #secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy) {
+            {buildL4('is', 
+                '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
+                '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
                 display: none !important;
             }
 
@@ -506,7 +515,8 @@
                 pointer-events: none;
             }
             
-            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) :is(#columns,/ #primary,/ #primary-inner,/ #secondary,/ #secondary-inner) {
+            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', 
+                '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
                 height: calc(100vh - var(--ytd-toolbar-height));
             }
             
@@ -538,7 +548,7 @@
             --ylb-min-below-area: min-below-area-for-theater;
             
             
-            :is(#player,/ #player-theater-container,/ #player-container-outer,/ #player-container-inner,/ #player-container,/ #movie_player,/ #movie_player video) { 
+            {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
@@ -643,7 +653,7 @@
                 flex: 1;
                 flex-direction: column;
 
-                :is(#material-tabs,/ .tab-content) {
+                {buildL4('is', '#material-tabs', '.tab-content')} {
                     outline: 0;
                 }
 
@@ -710,7 +720,7 @@
     
     selectors-2col = { //
          "expanded-panel": join(', ', 
-             "html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)", 
+             "html:not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)", 
              "html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]):not([theater]))"
          ),
          "expanded-live": "html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)",

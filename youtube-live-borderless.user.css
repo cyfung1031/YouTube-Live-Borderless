@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.2
+@version        0.4.3
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -612,10 +612,12 @@
                     margin: 0 auto;
                 }
 
+                /*
                 .ytp-iv-video-content {
                     width: 100% !important;
                     height: 100% !important;
                 }
+                */
 
                 /*
                 // this is buggy; eg multiple chapter hover container; can be fixed by YouTube Video Resize Fix Only

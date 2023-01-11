@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.4
+@version        0.4.5
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -26,7 +26,9 @@
 @var checkbox   no-masthead                     "Top.MastheadBar ::Hide"                            0
 @var number     masthead-hoverable-h            "Top.MastheadBar ::Hoverable >>>1_alwaysHide"       [4, 1, 8, 1]
 @var checkbox   disable-cinematics              "CinematicsEffect ::Disable"                        0
-@var range      video-enlarging                 "Video.Enlarging >>>Video.Border.Fine.Tune"       [0, 0, 8, 2]
+@var range      video-enlarging                 "Video.Enlarging >>>Video.Border.Fine.Tune"         [0, 0, 8, 2]
+@var range      video-padding-left-right        "Video.Padding.LeftRight (Experimental)"            [0, 0, 18, 2, 'px']
+@var range      video-padding-top-bottom        "Video.Padding.TopBottom (Experimental)"            [0, 0, 18, 2, 'px']
 @var range      primary-content-margin          "PrimaryContent ::Margin"                           [24, 6, 48, 6, "px"]
 @var range      video-title-size                "VideoTitle ::Size"                                 [2.0, 1.0, 3.0, 0.2, "rem"]
 @var checkbox   no-bottom-row                   "Bottom.PrimaryMetaInfoRow ::Hide"                  0
@@ -482,6 +484,17 @@
 
     contentf() {
         // html
+        
+        if (video-padding-left-right + video-padding-top-bottom) > 0 {
+            
+            #player-container-outer.ytd-watch-flexy {
+                padding-left: video-padding-left-right;
+                padding-right: video-padding-left-right;
+                padding-top: video-padding-top-bottom;
+                padding-bottom: video-padding-top-bottom;
+            }
+            
+        }
 
         
         body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {

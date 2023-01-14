@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.5
+@version        0.4.6
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -469,7 +469,7 @@
 
         
 
-        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_]):has(#movie_player) {
+        body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_]:not([hidden])):has(#movie_player) {
             overflow-y: unset !important;
         }
 
@@ -757,7 +757,7 @@
         
         &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
 
-            if no-masthead-w==2 {
+            if no-masthead-w>=1 {
                 contentNoMasthead()
             }
             contentSingleColMobile()

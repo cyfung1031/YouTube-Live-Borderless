@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.6
+@version        0.4.7
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -117,6 +117,23 @@
             padding-top: 0;
             margin-top: 0;
         }
+        
+        
+        html:not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe) {buildL4('is', 
+            '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
+            '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
+            display: none !important;
+        }
+        
+        
+        html:not([tabview-loaded]) #cinematics {
+            // contain: layout;
+            contain: layout size style;
+            user-select: none;
+            touch-action: none;
+            pointer-events: none;
+        }
+
 
     }
 
@@ -509,25 +526,12 @@
             
             }
 
-            {buildL4('is', 
-                '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
-                '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
-                display: none !important;
-            }
 
             ytd-watch-flexy:not([fullscreen]) #player-theater-container {
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
             
 
-            #cinematics {
-                // contain: layout;
-                contain: layout size style;
-                user-select: none;
-                touch-action: none;
-                pointer-events: none;
-            }
-            
             ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', 
                 '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
                 height: calc(100vh - var(--ytd-toolbar-height));
@@ -726,6 +730,8 @@
             // html
             contentf() //
         } //
+            
+            
         
     }
     

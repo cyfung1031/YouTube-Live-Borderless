@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.8
+@version        0.4.9
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -450,6 +450,11 @@
         }
         
         
+        /*
+
+        // originally this is to avoid sizing issue; however, as userscript "YouTube Video Resize Fix" is a must, this is no longer required.
+        // this css rule not compatible with YouTubeLiveClock
+
         ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]) #movie_player {
             
             .ytp-chrome-bottom[style*="width"] {
@@ -458,6 +463,8 @@
             }
 
         }
+
+        */
 
         
         ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) ytd-live-chat-frame#chat:not([collapsed]) {

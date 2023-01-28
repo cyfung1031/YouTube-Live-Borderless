@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.10
+@version        0.4.31
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -527,121 +527,137 @@ t33 = t34
 
 
     }
+    
+    
+    ytd-watch-flexy {
+
+            --ytd-margin-2y: var(--ytd-margin-2x);
+            --ytd-margin-4y: var(--ytd-margin-4x);
+            --ytd-margin-6y: var(--ytd-margin-6x);
+            --ytd-margin-8y: var(--ytd-margin-8x);
+
+    }
 
     contentf() {
         // html
-        
-        if t33 == 0 {
 
-            if (video-padding-left-right + video-padding-top-bottom) > 0 {
 
-                #player-container-outer.ytd-watch-flexy {
-                    padding-left: video-padding-left-right;
-                    padding-right: video-padding-left-right;
-                    padding-top: video-padding-top-bottom;
-                    padding-bottom: video-padding-top-bottom;
-                }
+        if (video-padding-left-right + video-padding-top-bottom) > 0 {
 
+            #player-container-outer.ytd-watch-flexy {
+                padding-left: video-padding-left-right;
+                padding-right: video-padding-left-right;
+                padding-top: video-padding-top-bottom;
+                padding-bottom: video-padding-top-bottom;
             }
 
+        }
 
-            body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+
+        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+            max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+        }
+
+        &:not([tabview-loaded]) {
+
+            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
+
                 max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-            }
-
-            &:not([tabview-loaded]) {
-
-                body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
-
-                    max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-
-                }
-
-
-                ytd-watch-flexy:not([fullscreen]) #player-theater-container {
-                    max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
-                }
-
-
-                ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
-                    height: calc(100vh - var(--ytd-toolbar-height));
-                }
-
-            }
-
-            if video-enlarging > 0 {
-
-                ytd-watch-flexy:not([theater]):not([fullscreen]) #movie_player video[src] {
-                    transform: 'scale(%s)' % (video-enlarging / 1000 + 1) ;
-                    transform-origin: 50% 50%;
-                }
 
             }
 
 
-
-
-
-
-
-            ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
-
-                --ylb-min-below-area: min-below-area-for-theater;
-
-
-                {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
-                    object-fit: contain;
-                    max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
-                }
+            ytd-watch-flexy:not([fullscreen]) #player-theater-container {
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
 
 
-
-            if no-bottom-row {
-
-                #bottom-row.ytd-watch-metadata {
-                    display: none !important;
-                }
+            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
+                height: calc(100vh - var(--ytd-toolbar-height));
             }
 
-            h1.ytd-watch-metadata {
-                font-size: video-title-size;
-                --font-size: video-title-size;
-                line-height: 140%;
-                margin-bottom: -2px;
+        }
+
+        if video-enlarging > 0 {
+
+            ytd-watch-flexy:not([theater]):not([fullscreen]) #movie_player video[src] {
+                transform: 'scale(%s)' % (video-enlarging / 1000 + 1) ;
+                transform-origin: 50% 50%;
             }
 
+        }
 
-            ytd-watch-flexy.style-scope:not([fullscreen]) {
 
-                & {
-                    --ytd-margin-2y: var(--ytd-margin-2x);
-                    --ytd-margin-4y: var(--ytd-margin-4x);
-                    --ytd-margin-6y: var(--ytd-margin-6x);
-                    --ytd-margin-8y: var(--ytd-margin-8x);
+
+
+
+
+
+        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
+
+            --ylb-min-below-area: min-below-area-for-theater;
+
+
+            {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
+                object-fit: contain;
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
+            }
+        }
+
+
+
+        if no-bottom-row {
+
+            #bottom-row.ytd-watch-metadata {
+                display: none !important;
+            }
+        }
+
+        h1.ytd-watch-metadata {
+            font-size: video-title-size;
+            --font-size: video-title-size;
+            line-height: 140%;
+            margin-bottom: -2px;
+        }
+
+
+
+
+
+        ytd-watch-flexy.style-scope:not([fullscreen]) {
+
+            
+            #columns.ytd-watch-flexy {
+                --ytd-margin-2x: 0;
+                --ytd-margin-4x: 0;
+                --ytd-margin-6x: 0;
+                --ytd-margin-8x: 0;
+            }
+            
+            blockm = @block {
+                --ytd-margin-2x: var(--ytd-margin-2y);
+                --ytd-margin-4x: var(--ytd-margin-4y);
+                --ytd-margin-6x: var(--ytd-margin-6y);
+                --ytd-margin-8x: var(--ytd-margin-8y);
+                
+            }
+
+            #secondary-inner.style-scope.ytd-watch-flexy {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            {buildL4('is', '#below', '#player', '#right-tabs')} {
+                {blockm}
+            }
+                
+            if t33 == 0 {
+                
+                .style-scope.ytd-watch-flexy > .style-scope:not(.ytd-watch-flexy) {
+                    {blockm}
                 }
 
-                #columns.style-scope.ytd-watch-flexy {
-                    --ytd-margin-2x: 0;
-                    --ytd-margin-4x: 0;
-                    --ytd-margin-6x: 0;
-                    --ytd-margin-8x: 0;
-                }
-
-                .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy),
-                #below,
-                #player {
-                    --ytd-margin-2x: var(--ytd-margin-2y);
-                    --ytd-margin-4x: var(--ytd-margin-4y);
-                    --ytd-margin-6x: var(--ytd-margin-6y);
-                    --ytd-margin-8x: var(--ytd-margin-8y);
-                }
-
-                #secondary-inner.style-scope.ytd-watch-flexy {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                }
 
                 #movie_player {
                     position: relative;
@@ -684,24 +700,6 @@ t33 = t34
                 }
 
 
-                #chat:not([collapsed]) {
-                    flex: 77;
-                }
-
-                #right-tabs {
-                    display: flex;
-                    margin: 0 !important;
-                    flex: 1;
-                    flex-direction: column;
-
-                    {buildL4('is', '#material-tabs', '.tab-content')} {
-                        outline: 0;
-                    }
-
-                    .tab-content {
-                        flex: 77;
-                    }
-                }
 
                 &:not([is-two-columns_]) #primary-inner > *:not(#player) {
                     padding: 0;
@@ -717,8 +715,30 @@ t33 = t34
                 }
                 */
             }
+            
+            #chat:not([collapsed]) {
+                flex: 77;
+            }
 
+            #right-tabs {
+                display: flex;
+                margin: 0 !important;
+                flex: 1;
+                flex-direction: column;
+
+                {buildL4('is', '#material-tabs', '.tab-content')} {
+                    outline: 0;
+                }
+
+
+                .tab-content {
+                    flex: 77;
+                }
+                
+            }
         }
+
+        
 
 
 

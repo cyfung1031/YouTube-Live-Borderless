@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.32
+@version        0.4.33
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -167,6 +167,21 @@ t33 = t34
 
         if masthead-hoverable-height > 0 {
 
+            ytd-app {
+                --ut-masthead-background: rgba(15,15,15,0.8);
+            }
+            ytd-app[darker-dark-theme] {
+                --ut-masthead-background: rgba(240,240,240,0.8);
+            }
+            ytd-masthead#masthead:hover {
+                background-color: color(--ut-masthead-background);
+                z-index: 9999 !important;
+            }
+
+            ytd-masthead#masthead {
+                background-color: rgba(15,15,15,0.8);
+                z-index: 9999 !important;
+            }
 
             #masthead-container:hover {
                 --masthead-opacity: 1;

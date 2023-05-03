@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.33
+@version        0.4.34
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -145,6 +145,10 @@ t33 = t34
             /* 0px not 0 */
             --ytd-masthead-height: 0px;
             --ytd-toolbar-height: 0px;
+            --ytd-watch-flexy-masthead-height: 0px;
+        }
+        
+        & ytd-watch-flexy {
             --ytd-watch-flexy-masthead-height: 0px;
         }
         

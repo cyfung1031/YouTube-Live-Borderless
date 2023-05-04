@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.34
+@version        0.4.40
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -148,7 +148,26 @@ t33 = t34
             --ytd-watch-flexy-masthead-height: 0px;
         }
         
+        /*
         & ytd-watch-flexy {
+            --ytd-watch-flexy-masthead-height: 0px;
+        }
+        */
+        
+        /*  
+                #masthead-container + ytd-page-manager#page-manager 
+                has margin-top var(--ytd-masthead-height,var(--ytd-toolbar-height))
+        */
+        
+        ytd-app[style] { /* YouTube set the masthead-height in style */
+            --ytd-masthead-height: 0px !important;
+            --ytd-toolbar-height: 0px !important;
+            --ytd-watch-flexy-masthead-height: 0px !important;
+        }
+        
+        & .style-scope{buildL4('is', '#page-manager', 'ytd-watch-flexy', 'ytd-page-manager')} {
+            --ytd-masthead-height: 0px;
+            --ytd-toolbar-height: 0px;
             --ytd-watch-flexy-masthead-height: 0px;
         }
         

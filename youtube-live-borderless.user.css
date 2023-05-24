@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.0
+@version        0.5.1
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -870,6 +870,19 @@ t33 = t34
     }
     
     if youtube-wpr {
+
+        
+        @keyframes wpr-message-appear {
+            0% {
+                top: -300vh;
+            }
+            1% {
+                top: 50%; 
+            }
+            100% {
+                top: 50%; 
+            }
+        }
         
         
         html:not([youtube-wpr])::after {
@@ -880,14 +893,16 @@ t33 = t34
             height: auto;
             position: fixed;
             left: 50%;
-            top: 50%;
+            top: -300vh;
             transform: translate(-50%, -50%);
             transform-origin: 0 0;
             background: #71210f;
             color: #d2dadb;
             font-size: 14pt;
             text-shadow: 1px 1px 2px #605262;
+            animation: wpr-message-appear 1ms 2s forwards;
         }
+
         
     }
     

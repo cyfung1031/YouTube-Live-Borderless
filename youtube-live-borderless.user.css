@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.4.40
+@version        0.5.0
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -12,6 +12,7 @@
 @compatible     opera Opera >= 91; Stylus (Beta)
 @compatible     safari Safari >= 15.4; Stylus
 @preprocessor   stylus
+@var checkbox   youtube-wpr                    "YouTube WPR"                      0
 @var select     mode-for-two-col                "Mode ##TwoColumns" {
   "Expanded Panel Only #Recommended":  "expanded-panel",
   "Expanded Live Chat Only":            "expanded-live",
@@ -117,8 +118,9 @@ t33 = t34
             margin-top: 0;
         }
         
+        m = youtube-wpr ? ':not([tabview-loaded])[youtube-wpr*="h2"]': ":not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)"
         
-        html:not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe) {buildL4('is', 
+        html{selector(m)} {buildL4('is', 
             '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
             '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
             display: none !important;
@@ -332,8 +334,9 @@ t33 = t34
 
         
         
+        m = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
 
-        &:has(#chat:not([collapsed])) {
+        &{selector(m)} {
             // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])):has(#chat:not([collapsed]))
 
             #contentContainer.tp-yt-app-drawer[swipe-open].tp-yt-app-drawer::after {
@@ -408,24 +411,27 @@ t33 = t34
 
             if t33 == 0 {
 
-            #primary-inner.ytd-watch-flexy > :not(.style-scope) {
-                display: none !important;
-            }
+                #primary-inner.ytd-watch-flexy > :not(.style-scope) {
+                    display: none !important;
+                }
 
-            #below > *:not(#chat) {
-                /* display:none !important; */
-                position: fixed !important;
-                transform: scale(0.01) !important;
-                transform-origin: 0 0 !important;
-                left: -100vw !important;
-                top: -100vh !important;
-                visibility: collaspe !important;
-                pointer-events: none !important;
-                user-select: none !important;
-                touch-action: none !important;
+                #below > *:not(#chat) {
+                    /* display:none !important; */
+                    position: fixed !important;
+                    transform: scale(0.01) !important;
+                    transform-origin: 0 0 !important;
+                    left: -100vw !important;
+                    top: -100vh !important;
+                    visibility: collaspe !important;
+                    pointer-events: none !important;
+                    user-select: none !important;
+                    touch-action: none !important;
 
+                }
             }
-        }
+        
+        
+        
 
             #below:not(:has(#chat)) {
                 display: none;
@@ -550,10 +556,16 @@ t33 = t34
             }
 
 
-
+  
+            body.lock-scrollbar {
+                overflow-y: auto;
+            }
+            
+/*
             body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_]:not([hidden])):has(#movie_player) {
                 overflow-y: unset !important;
             }
+            */
 
 
             ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
@@ -784,13 +796,13 @@ t33 = t34
 
         content2c() //
         
-        selector-g = '&' //
+        selector-g = '' //
         
         if mode-for-single-col=="disabled" { //
-            selector-g = '&:has(ytd-watch-flexy[is-two-columns_])' //
+            selector-g = youtube-wpr ? '[youtube-wpr*="s"]': ":has(ytd-watch-flexy[is-two-columns_])" //
         } //
             
-        {s(selector-g)} { //
+        &{s(selector-g)} { //
             // html
             contentf() //
         } //
@@ -810,6 +822,20 @@ t33 = t34
          "expandable-live": "html:has(ytd-live-chat-frame#chat):has(iframe#chatframe)",
          "always": "html"
      } //
+         
+    if youtube-wpr {
+        
+        selectors-2col = { //
+         "expanded-panel": join(', ', 
+             'html:not([tabview-loaded])[youtube-wpr*="h2"]', 
+             'html[tabview-loaded][youtube-wpr*="s"][youtube-wpr*="f"][youtube-wpr*="t"]'
+         ),
+         "expanded-live": 'html[youtube-wpr*="h2"]',
+         "expandable-live": 'html:not([youtube-wpr*="h0"])',
+         "always": "html"
+     } //
+        
+    }
     
     selector-2col = selectors-2col[mode-for-two-col]
     selectors-k = split(', ', selector-2col)
@@ -831,13 +857,38 @@ t33 = t34
     if single-col-mobile {
         
         
-        &:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])) {
+        m = youtube-wpr ? '[youtube-wpr*="S"][youtube-wpr*="f"]': ":has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]))"
+        
+        
+        html{selector(m)} {
 
             if no-masthead-w==2 {
                 contentNoMasthead()
             }
             contentSingleColMobile()
         }
+    }
+    
+    if youtube-wpr {
+        
+        
+        html:not([youtube-wpr])::after {
+            display: block;
+            content: 'YouTube Live Borderless: YouTube WPR is not yet installed. Please install the userscript https://greasyfork.org/scripts/457319 in order to use YouTube WPR';
+            width: 60vh;
+            padding: 12px;
+            height: auto;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: 0 0;
+            background: #71210f;
+            color: #d2dadb;
+            font-size: 14pt;
+            text-shadow: 1px 1px 2px #605262;
+        }
+        
     }
     
 }

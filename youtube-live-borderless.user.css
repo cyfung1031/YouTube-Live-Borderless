@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.2
+@version        0.5.3
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -869,68 +869,77 @@ t33 = t34
         }
     }
     
+    @css {
 
-    @supports not selector(:has(body)) {
-        
-        
-        html::after {
-            display: block;
-            content: 'Your browser does not support "has-selector". Please update to latest version and enable it via configuration.';
-            width: 60vh;
-            padding: 12px;
-            height: auto;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            transform-origin: 0 0;
-            background: #71210f;
-            color: #d2dadb;
-            font-size: 14pt;
-            text-shadow: 1px 1px 2px #605262;
-        }
-        
-    }
-
-    
-    @supports selector(:has(body)) {
-
-
-        if youtube-wpr {
-
-        
-            @keyframes wpr-message-appear {
-                0% {
-                    top: -300vh;
-                }
-                1% {
-                    top: 50%; 
-                }
-                100% {
-                    top: 50%; 
-                }
-            }
+        @supports not selector(:has(body)) {
             
             
-            html:not([youtube-wpr])::after {
+            html::after {
                 display: block;
-                content: 'YouTube Live Borderless: YouTube WPR is not yet installed. Please install the userscript https://greasyfork.org/scripts/457319 in order to use YouTube WPR';
+                content: 'Your browser does not support "has-selector". Please update to latest version and enable it via configuration.';
                 width: 60vh;
                 padding: 12px;
                 height: auto;
                 position: fixed;
                 left: 50%;
-                top: -300vh;
+                top: 50%;
                 transform: translate(-50%, -50%);
                 transform-origin: 0 0;
                 background: #71210f;
                 color: #d2dadb;
                 font-size: 14pt;
                 text-shadow: 1px 1px 2px #605262;
-                animation: wpr-message-appear 1ms 2s forwards;
             }
-    
             
+        }
+    }
+
+    
+
+
+    if youtube-wpr {
+
+
+            
+        @css {
+                
+            @supports selector(:has(body)) {
+
+            
+                @keyframes wpr-message-appear {
+                    0% {
+                        top: -300vh;
+                    }
+                    1% {
+                        top: 50%; 
+                    }
+                    100% {
+                        top: 50%; 
+                    }
+                }
+                
+                
+                html:not([youtube-wpr])::after {
+                    display: block;
+                    content: 'YouTube Live Borderless: YouTube WPR is not yet installed. Please install the userscript https://greasyfork.org/scripts/457319 in order to use YouTube WPR';
+                    width: 60vh;
+                    padding: 12px;
+                    height: auto;
+                    position: fixed;
+                    left: 50%;
+                    top: -300vh;
+                    transform: translate(-50%, -50%);
+                    transform-origin: 0 0;
+                    background: #71210f;
+                    color: #d2dadb;
+                    font-size: 14pt;
+                    text-shadow: 1px 1px 2px #605262;
+                    animation: wpr-message-appear 1ms 2s forwards;
+                }
+        
+                
+            }
+
         }
 
     }

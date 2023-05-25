@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.4
+@version        0.5.5
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -820,7 +820,7 @@ t33 = t34
     selectors-2col = { //
          "expanded-panel": join(', ', 
              "html:not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)", 
-             "html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]):not([theater]))"
+             "html[tabview-loaded]:has(ytd-watch-flexy[is-two-columns_]:not([fullscreen]))"
          ),
          "expanded-live": "html:has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)",
          "expandable-live": "html:has(ytd-live-chat-frame#chat):has(iframe#chatframe)",
@@ -831,12 +831,12 @@ t33 = t34
         
         selectors-2col = { //
          "expanded-panel": join(', ', 
-             'html:not([tabview-loaded])[youtube-wpr*="h2"]', 
-             'html[tabview-loaded][youtube-wpr*="s"][youtube-wpr*="f"][youtube-wpr*="t"]'
+             'html:not([tabview-loaded])[youtube-wpr*="h2"][youtube-wpr*="f"]', 
+             'html[tabview-loaded][youtube-wpr*="s"][youtube-wpr*="f"]'
          ),
-         "expanded-live": 'html[youtube-wpr*="h2"]',
-         "expandable-live": 'html:not([youtube-wpr*="h0"])',
-         "always": "html"
+         "expanded-live": 'html[youtube-wpr*="h2"][youtube-wpr*="f"]',
+         "expandable-live": 'html:not([youtube-wpr*="h0"])[youtube-wpr*="f"]',
+         "always": 'html[youtube-wpr*="f"]'
      } //
         
     }

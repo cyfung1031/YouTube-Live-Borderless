@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.7
+@version        0.5.8
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -897,8 +897,22 @@ t33 = t34
         html{selector(m)} {
 
             
-            if no-masthead-w>=1 {
+            if no-masthead-w==1 {
                 contentNoMasthead()
+            }
+            
+            if no-masthead-w==2 {
+                
+                if youtube-wpr {
+                    &[youtube-wpr*="h2"] {
+                        contentNoMasthead()
+                    }
+                } else {
+                    
+                    &:has(#chat:not([collapsed])) {
+                        contentNoMasthead()
+                    }
+                }
             }
             contentSingleColMobile()
         }

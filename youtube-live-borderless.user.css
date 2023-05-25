@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.3
+@version        0.5.4
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -12,20 +12,21 @@
 @compatible     opera Opera >= 91; Stylus (Beta)
 @compatible     safari Safari >= 15.4; Stylus
 @preprocessor   stylus
-@var checkbox   youtube-wpr                    "YouTube WPR"                      0
+@var checkbox   youtube-wpr                     "YouTube WPR"                      0
 @var select     mode-for-two-col                "Mode ##TwoColumns" {
-  "Expanded Panel Only #Recommended":  "expanded-panel",
+  "Expanded Panel Only #Recommended":   "expanded-panel",
   "Expanded Live Chat Only":            "expanded-live",
   "Expandable Live Chat Only":          "expandable-live",
   "Always":                             "always"
 }
 @var select     mode-for-single-col             "Mode ##SingleColumn" {
-  "YT Mobile #Recommended":       "mobile",
+  "YT Mobile #Recommended":             "mobile",
   "Normal":                             "normal",
   "Disabled":                           "disabled"
 }
 @var checkbox   no-masthead                     "Top.MastheadBar ::Hide"                            0
-@var number     masthead-hoverable-h            "Top.MastheadBar ::Hoverable >>>1_alwaysHide"       [4, 1, 8, 1]
+@var range      masthead-hoverable-height       "Top.MastheadBar ::Hoverable"                       [12, 0, 36, 2, 'px']
+@var range      masthead-hoverable-delay-in     "Top.MastheadBar ::Hoverable.DelayIn"               [300, 0, 800, 100, 'ms']
 @var checkbox   disable-cinematics              "CinematicsEffect ::Disable"                        0
 @var range      video-enlarging                 "Video.Enlarging >>>Video.Border.Fine.Tune"         [0, 0, 8, 2]
 @var range      video-padding-left-right        "Video.Padding.LeftRight (Experimental)"            [0, 0, 18, 2, 'px']
@@ -33,12 +34,12 @@
 @var range      primary-content-margin          "PrimaryContent ::Margin"                           [24, 6, 48, 6, "px"]
 @var range      video-title-size                "VideoTitle ::Size"                                 [2.0, 1.0, 3.0, 0.2, "rem"]
 @var checkbox   no-bottom-row                   "Bottom.PrimaryMetaInfoRow ::Hide"                  0
-@var range      min-below-area                  "BelowArea ::Minimum >>>10px_disable"               [120, 10, 240, 10, 'px']
-@var range      min-below-area-for-theater      "WideTheater.BelowArea ::Minimum >>>10px_disable"   [120, 10, 240, 10, 'px']
+@var range      min-below-area                  "BelowArea ::Minimum"                               [120, 0, 240, 10, 'px']
+@var range      min-below-area-for-theater      "WideTheater.BelowArea ::Minimum"                   [120, 0, 240, 10, 'px']
 @var number     side-panel-width                "SidePanel ::Width"                                 [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "RoundBorder ::Disable"                             1
 @var number     chat-zoom-for-right-col         "RightCol.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
-@var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom >>>4px_disable"    [36, 4, 60, 4, 'px']
+@var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom"                   [36, 0, 60, 4, 'px']
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
 @var checkbox   t34                             "Disable Some CSS Rules for laggy page"             0
@@ -72,18 +73,20 @@ t33 = t34
         selector(st1)
     }
 
+    /*
     if min-below-area <= 10px {
         min-below-area = 0px
     }
     if min-below-area-for-theater <= 10px {
         min-below-area-for-theater = 0px
     }
+    */
     chat-btn-height = chat-btn-height + 1px
-    if chat-btn-height == 4px + 1px {
+    if chat-btn-height == 0px + 1px {
         chat-btn-height = 0px
     }
     
-    masthead-hoverable-height = (masthead-hoverable-h - 1) * 2px
+    // masthead-hoverable-height = (masthead-hoverable-h - 1) * 2px
 
     no-masthead-w = no-masthead //
     chrome-bottom-bar-margin = 12px // this cannot be changed
@@ -214,6 +217,7 @@ t33 = t34
 
             #masthead-container:hover > ytd-masthead {
                 transform: translateY(0%);
+                transition-delay: masthead-hoverable-delay-in;
             }
 
             #masthead-container::after {

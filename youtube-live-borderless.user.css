@@ -857,6 +857,7 @@ t33 = t34
         
     }
     
+    
 
     if single-col-mobile {
         
@@ -866,7 +867,8 @@ t33 = t34
         
         html{selector(m)} {
 
-            if no-masthead-w==2 {
+            
+            if no-masthead-w>=1 {
                 contentNoMasthead()
             }
             contentSingleColMobile()

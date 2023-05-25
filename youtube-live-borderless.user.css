@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.5
+@version        0.5.6
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -285,6 +285,15 @@ t33 = t34
         
 
         // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]))
+
+        if no-masthead-w>=1 {
+            ytd-watch-flexy:not([theater]):not([fullscreen]):not([no-top-margin]):not([reduced-top-margin]) .ytd-watch-flexy{buildL4('is', '#primary', '#secondary')} {
+                padding-top: 0px;
+            }
+            ytd-watch-flexy[tyt-tab^="#tab-"]:not([is-two-columns_]) #primary-inner.ytd-watch-flexy {
+                padding-bottom: 0px;
+            }
+        }
 
         #chat:not([collapsed]) {
             --ytd-margin-2x: 0;

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.8
+@version        0.5.9
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -724,6 +724,10 @@ t33 = t34
                     display: flex;
                     flex-direction: column;
                     height: 100%;
+                }
+
+                #secondary-inner.style-scope.ytd-watch-flexy > * {
+                    flex-shrink: 0;
                 }
 
                 #movie_player {

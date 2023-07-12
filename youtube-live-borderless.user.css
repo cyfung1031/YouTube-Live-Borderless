@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.10
+@version        0.5.11
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -42,7 +42,6 @@
 @var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom"                   [36, 0, 60, 4, 'px']
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
-@var checkbox   t34                             "Disable Some CSS Rules for laggy page"             0
 ==/UserStyle== */
 /*
 
@@ -60,7 +59,6 @@
 
 */
 // d
-t33 = t34
 @-moz-document url-prefix("https://www.youtube.com/watch?v=") {
 
     dummy() { 
@@ -97,12 +95,17 @@ t33 = t34
     }
     
     chat-zoom-for-mobile-enable = ((chat-zoom-for-mobile < 1) or (chat-zoom-for-mobile > 1))
-
     
-    content361(){
+    contentBase() {
         
         html {
             --ylb-min-below-area: min-below-area;
+        }
+        
+        #microformat.ytd-watch-flexy {
+            position: fixed;
+            top:-200vh;
+            left:-200vw;
         }
         
         // general fix
@@ -152,17 +155,6 @@ t33 = t34
             --ytd-toolbar-height: 0px;
             --ytd-watch-flexy-masthead-height: 0px;
         }
-        
-        /*
-        & ytd-watch-flexy {
-            --ytd-watch-flexy-masthead-height: 0px;
-        }
-        */
-        
-        /*  
-                #masthead-container + ytd-page-manager#page-manager 
-                has margin-top var(--ytd-masthead-height,var(--ytd-toolbar-height))
-        */
         
         ytd-app[style] { /* YouTube set the masthead-height in style */
             --ytd-masthead-height: 0px !important;
@@ -236,52 +228,45 @@ t33 = t34
             }
         }
         
-        if t33 == 0 {
 
-            ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
 
-                #columns.style-scope.ytd-watch-flexy,
-                #primary.style-scope.ytd-watch-flexy,
-                #primary-inner.style-scope.ytd-watch-flexy,
-                #secondary.style-scope.ytd-watch-flexy,
-                #secondary-inner.style-scope.ytd-watch-flexy {
-                    height: 100vh;
-                    max-height: 100%;
-                }
-            }
-
-            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
-
+            #columns.style-scope.ytd-watch-flexy,
+            #primary.style-scope.ytd-watch-flexy,
+            #primary-inner.style-scope.ytd-watch-flexy,
+            #secondary.style-scope.ytd-watch-flexy,
+            #secondary-inner.style-scope.ytd-watch-flexy {
                 height: 100vh;
-                #player-theater-container.ytd-watch-flexy {
-                    flex: 77;
-                    max-height: unset;
-                }
+                max-height: 100%;
+            }
+        }
 
+        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
 
+            height: 100vh;
+            #player-theater-container.ytd-watch-flexy {
+                flex: 77;
+                max-height: unset;
             }
 
-
-
-            &:not([tabview-loaded]) ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
-
-
-                #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
-                    overflow: visible;
-                }
-            }
 
         }
 
+
+
+        &:not([tabview-loaded]) ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
+
+            #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
+                overflow: visible;
+            }
+            
+        }
+
+        
+
     } // 
         
-    #microformat.ytd-watch-flexy {
-        position: fixed;
-        top:-200vh;
-        left:-200vw;
-    }
-        
-    contentSingleColMobile(){
+    contentSingleColMobile() {
         
 
         // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]))
@@ -298,7 +283,6 @@ t33 = t34
                 &[youtube-wpr*="h2"] ytd-watch-flexy[tyt-tab^="#tab-"]:not([is-two-columns_]) #primary-inner.ytd-watch-flexy {
                     padding-bottom: 0px;
                 }
-
 
 
             } else {
@@ -330,7 +314,6 @@ t33 = t34
             // bottom:0;
 
             iframe#chatframe{
-
 
                 min-height: 0px;
 
@@ -372,36 +355,33 @@ t33 = t34
         &{selector(m)} {
             // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])):has(#chat:not([collapsed]))
 
+            --ylb-min-below-area:  chat-min-height;
+
             #contentContainer.tp-yt-app-drawer[swipe-open].tp-yt-app-drawer::after {
 
                 content: unset;
 
             }
+ 
 
-
-            if t33 == 0 {
-
-                #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
-                #below.ytd-watch-flexy > .ytd-watch-flexy{buildL4('is', '#related', 'ytd-watch-metadata')} {
-                   /* display:none !important; */
-                    position: fixed !important;
-                    transform: scale(0.01) !important;
-                    transform-origin: 0 0 !important;
-                    left: -100vw !important;
-                    top: -100vh !important;
-                    visibility: collaspe !important;
-                    pointer-events: none !important;
-                    user-select: none !important;
-                    touch-action: none !important;
-                }
-
+            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
+            #below.ytd-watch-flexy > .ytd-watch-flexy{buildL4('is', '#related', 'ytd-watch-metadata')} {
+                /* display:none !important; */
+                position: fixed !important;
+                transform: scale(0.01) !important;
+                transform-origin: 0 0 !important;
+                left: -100vw !important;
+                top: -100vh !important;
+                visibility: collaspe !important;
+                pointer-events: none !important;
+                user-select: none !important;
+                touch-action: none !important;
             }
+ 
 
             #secondary.ytd-watch-flexy {
                 display:none !important;
             }
-
-
 
 
             .efyt-control-bar {
@@ -424,63 +404,46 @@ t33 = t34
                 margin-bottom: 0;
             }
 
-
-
             {buildL4('is', '#columns', '#primary')} {
                 padding: 0;
             }
-
-            --ylb-min-below-area:  chat-min-height;
-
-
-
 
             {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} {
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
 
             }
+ 
 
-
-            if t33 == 0 {
-
-                #primary-inner.ytd-watch-flexy > :not(.style-scope) {
-                    display: none !important;
-                }
-
-                #below > *:not(#chat) {
-                    /* display:none !important; */
-                    position: fixed !important;
-                    transform: scale(0.01) !important;
-                    transform-origin: 0 0 !important;
-                    left: -100vw !important;
-                    top: -100vh !important;
-                    visibility: collaspe !important;
-                    pointer-events: none !important;
-                    user-select: none !important;
-                    touch-action: none !important;
-
-                }
+            #primary-inner.ytd-watch-flexy > :not(.style-scope) {
+                display: none !important;
             }
-        
-        
-        
+
+            #below {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+            }
+            #below > *:not([id|="chat"]) {
+                position: fixed !important;
+                transform: scale(0.01) !important;
+                transform-origin: 0 0 !important;
+                left: -100vw !important;
+                top: -100vh !important;
+                visibility: collaspe !important;
+                pointer-events: none !important;
+                user-select: none !important;
+                touch-action: none !important;
+            }
 
             #below:not(:has(#chat)) {
                 display: none;
             }
 
- 
-
-
             {buildL4('is', 'ytd-watch-flexy', '#columns.ytd-watch-flexy', '#primary.ytd-watch-flexy', '#primary-inner.ytd-watch-flexy')} {
                 display: flex;
                 flex-direction: column;
                 margin: 0;
-                flex: 1;
-            }
-
-            #below {
                 flex: 1;
             }
 
@@ -494,335 +457,276 @@ t33 = t34
                 min-height: unset !important;
             }
         }
-
-
         
     }
     
 
     content2c() {
+    
+        if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
 
-        
-        if t33 == 0 {
-        
-            if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
+            ytd-watch-flexy[is-two-columns_]:not([fullscreen]) iframe#chatframe {
 
-                ytd-watch-flexy[is-two-columns_]:not([fullscreen]) iframe#chatframe {
+                position:absolute;
+                margin-top:chat-btn-height;
 
-                    position:absolute;
-                    margin-top:chat-btn-height;
+                transform: 'scale(%s)' % chat-zoom-for-right-col;
+                transform-origin: 0 0;
+                width: '%s !important' % (100% / chat-zoom-for-right-col);
+                max-width: unset !important;
+                height: s('calc( (100% - %s) / %s ) !important', chat-btn-height, chat-zoom-for-right-col);
+                z-index: 1; /* for normal youtube */
 
-                    transform: 'scale(%s)' % chat-zoom-for-right-col;
-                    transform-origin: 0 0;
-                    width: '%s !important' % (100% / chat-zoom-for-right-col);
-                    max-width: unset !important;
-                    height: s('calc( (100% - %s) / %s ) !important', chat-btn-height, chat-zoom-for-right-col);
-                    z-index: 1; /* for normal youtube */
-
-                }
-
-            }
-
-
-            if no-masthead-w==0 {
-
-                ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
-
-                    .style-scope.ytd-watch-flexy{buildL4('is', '#secondary', '#secondary-inner')} {
-                        height: calc(100vh - var(--ytd-toolbar-height));
-                        max-height: 100%;
-                    }
-                }
-            }
-
-
-            ytd-watch-flexy[is-two-columns_]:not([fullscreen]) #movie_player {
-
-                .ytp-chrome-bottom[style*="width"] {
-                    width: unset !important;
-                    left: chrome-bottom-bar-margin !important;
-                    right: chrome-bottom-bar-margin !important;
-                }
-
-            }
-
-
-            /*
-
-            // originally this is to avoid sizing issue; however, as userscript "YouTube Video Resize Fix" is a must, this is no longer required.
-            // this css rule not compatible with YouTubeLiveClock
-
-            ytd-watch-flexy:not([is-two-columns_]):not([fullscreen]) #movie_player {
-
-                .ytp-chrome-bottom[style*="width"] {
-                    left: 50% !important;
-                    transform: translateX(-50%);
-                }
-
-            }
-
-            */
-
-
-            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) ytd-live-chat-frame#chat:not([collapsed]) {
-                    min-height: unset;
-            }
-
-
-
-            ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]) #primary-inner.ytd-watch-flexy > *:not(#player) {
-                    padding: 0 primary-content-margin 0;
-            }
-
-
-            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) #player .ytd-watch-flexy{buildL4('is', '#player-container-outer', '#player-container-inner', '#player-container')}{
-
-                // layout outside
-                 // no effect
-                 // layout inside
-                max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for very wide screen
-            }
-
-            ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) #player-theater-container.ytd-watch-flexy {
-                max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for 4:3 video
-
-            }
-
-
-  
-            body.lock-scrollbar {
-                overflow-y: auto;
-            }
-            
-/*
-            body.lock-scrollbar[style*="overflow"][style*="hidden"]:has(ytd-watch-flexy[is-two-columns_]:not([hidden])):has(#movie_player) {
-                overflow-y: unset !important;
-            }
-            */
-
-
-            ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
-                width: side-panel-width;
             }
 
         }
-    
 
 
+        if no-masthead-w==0 {
+
+            ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) {
+
+                .style-scope.ytd-watch-flexy{buildL4('is', '#secondary', '#secondary-inner')} {
+                    height: calc(100vh - var(--ytd-toolbar-height));
+                    max-height: 100%;
+                }
+            }
+        }
+
+
+        ytd-watch-flexy[is-two-columns_]:not([fullscreen]) #movie_player {
+
+            .ytp-chrome-bottom[style*="width"] {
+                width: unset !important;
+                left: chrome-bottom-bar-margin !important;
+                right: chrome-bottom-bar-margin !important;
+            }
+
+        }
+
+
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) ytd-live-chat-frame#chat:not([collapsed]) {
+            min-height: unset;
+        }
+
+
+
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]) #primary-inner.ytd-watch-flexy > *:not(#player) {
+            padding: 0 primary-content-margin 0;
+        }
+
+
+        ytd-watch-flexy.style-scope[is-two-columns_]:not([theater]):not([fullscreen]) #player .ytd-watch-flexy{buildL4('is', '#player-container-outer', '#player-container-inner', '#player-container')}{
+
+            // layout outside
+            // no effect
+            // layout inside
+            max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for very wide screen
+        }
+
+        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) #player-theater-container.ytd-watch-flexy {
+            max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for 4:3 video
+
+        }
+
+        body.lock-scrollbar {
+            overflow-y: auto;
+        }
+
+        ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
+            width: side-panel-width;
+        }
+ 
     }
 
     contentf() {
         // html
         
-        if t33 == 0 {
 
-            if (video-padding-left-right + video-padding-top-bottom) > 0 {
+        if (video-padding-left-right + video-padding-top-bottom) > 0 {
 
-                #player-container-outer.ytd-watch-flexy {
-                    padding-left: video-padding-left-right;
-                    padding-right: video-padding-left-right;
-                    padding-top: video-padding-top-bottom;
-                    padding-bottom: video-padding-top-bottom;
-                }
-
+            #player-container-outer.ytd-watch-flexy {
+                padding-left: video-padding-left-right;
+                padding-right: video-padding-left-right;
+                padding-top: video-padding-top-bottom;
+                padding-bottom: video-padding-top-bottom;
             }
 
+        }
 
-            body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+
+        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+            max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+        }
+
+        &:not([tabview-loaded]) {
+
+            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
+
                 max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-            }
-
-            &:not([tabview-loaded]) {
-
-                body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
-
-                    max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-
-                }
-
-
-                ytd-watch-flexy:not([fullscreen]) #player-theater-container {
-                    max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
-                }
-
-
-                ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
-                    height: calc(100vh - var(--ytd-toolbar-height));
-                }
-
-            }
-
-            if video-enlarging > 0 {
-
-                ytd-watch-flexy:not([theater]):not([fullscreen]) #movie_player video[src] {
-                    transform: 'scale(%s)' % (video-enlarging / 1000 + 1) ;
-                    transform-origin: 50% 50%;
-                }
 
             }
 
 
-
-
-
-
-
-            ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
-
-                --ylb-min-below-area: min-below-area-for-theater;
-
-
-                {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
-                    object-fit: contain;
-                    max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
-                }
+            ytd-watch-flexy:not([fullscreen]) #player-theater-container {
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
 
 
-
-            if no-bottom-row {
-
-                #bottom-row.ytd-watch-metadata {
-                    display: none !important;
-                }
+            ytd-watch-flexy[is-two-columns_]:not([theater]):not([fullscreen]) {buildL4('is', '#columns', '#primary', '#primary-inner', '#secondary', '#secondary-inner')} {
+                height: calc(100vh - var(--ytd-toolbar-height));
             }
 
-            h1.ytd-watch-metadata {
-                font-size: video-title-size;
-                --font-size: video-title-size;
-                line-height: 140%;
-                margin-bottom: -2px;
-            }
+        }
 
-            
-        
-            chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
+        if video-enlarging > 0 {
 
-            &{selector(chat-selector)} {
-                
-                ytd-watch-flexy.style-scope:not([fullscreen]) {
-                    
-                    .style-scope{buildL4('is', '#chat', '#chat-container')}{
-                        flex: 77;
-                    }
-                }
-                
-            }
-
-            ytd-watch-flexy.style-scope:not([fullscreen]) {
-
-                & {
-                    --ytd-margin-2y: var(--ytd-margin-2x);
-                    --ytd-margin-4y: var(--ytd-margin-4x);
-                    --ytd-margin-6y: var(--ytd-margin-6x);
-                    --ytd-margin-8y: var(--ytd-margin-8x);
-                }
-
-                #columns.style-scope.ytd-watch-flexy {
-                    --ytd-margin-2x: 0;
-                    --ytd-margin-4x: 0;
-                    --ytd-margin-6x: 0;
-                    --ytd-margin-8x: 0;
-                }
-
-                .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy),
-                #below,
-                #player {
-                    --ytd-margin-2x: var(--ytd-margin-2y);
-                    --ytd-margin-4x: var(--ytd-margin-4y);
-                    --ytd-margin-6x: var(--ytd-margin-6y);
-                    --ytd-margin-8x: var(--ytd-margin-8y);
-                }
-
-                #secondary-inner.style-scope.ytd-watch-flexy {
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                }
-
-                #secondary-inner.style-scope.ytd-watch-flexy > * {
-                    flex-shrink: 0;
-                }
-
-                #movie_player {
-                    position: relative;
-                    > .html5-video-container:has(video) {
-                        top: 0;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
-                        position: absolute;
-                    }
-
-                    .html5-video-container > video {
-                        width: unset !important;
-                        height: 100% !important;
-                        left: 0 !important;
-                        right: 0 !important;
-                        max-height: 100%;
-                        max-width: 100%;
-                        margin: 0 auto;
-                    }
-
-                    /*
-                    .ytp-iv-video-content {
-                        width: 100% !important;
-                        height: 100% !important;
-                    }
-                    */
-
-                    /*
-                    // this is buggy; eg multiple chapter hover container; can be fixed by YouTube Video Resize Fix Only
-                    .ytp-chapter-hover-container[style*="width"] {
-                        width: 100% !important;
-                    }
-                    */
-
-                    .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
-                        top: 0 !important;
-                    }
-
-                }
-
-                #chat-container {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                #right-tabs {
-                    display: flex;
-                    margin: 0 !important;
-                    flex: 1;
-                    flex-direction: column;
-
-                    {buildL4('is', '#material-tabs', '.tab-content')} {
-                        outline: 0;
-                    }
-
-                    .tab-content {
-                        flex: 77;
-                    }
-                }
-
-                &:not([is-two-columns_]) #primary-inner > *:not(#player) {
-                    padding: 0;
-                }
-
-                &:not([is-two-columns_]) #primary-inner #below > *:not(ytd-live-chat-frame#chat) {
-                    padding: 0 primary-content-margin 0;
-                }
-
-                /*
-                #player-container-outer.ytd-watch-flexy {
-                    max-width: unset;
-                }
-                */
+            ytd-watch-flexy:not([theater]):not([fullscreen]) #movie_player video[src] {
+                transform: 'scale(%s)' % (video-enlarging / 1000 + 1) ;
+                transform-origin: 50% 50%;
             }
 
         }
 
 
 
+
+
+
+
+        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
+
+            --ylb-min-below-area: min-below-area-for-theater;
+
+            {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
+                object-fit: contain;
+                max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
+            }
+        }
+
+
+
+        if no-bottom-row {
+
+            #bottom-row.ytd-watch-metadata {
+                display: none !important;
+            }
+        }
+
+        h1.ytd-watch-metadata {
+            font-size: video-title-size;
+            --font-size: video-title-size;
+            line-height: 140%;
+            margin-bottom: -2px;
+        }
+
+        
+    
+        chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
+
+        &{selector(chat-selector)} {
+            
+            ytd-watch-flexy.style-scope:not([fullscreen]) {
+                
+                .style-scope{buildL4('is', '#chat', '#chat-container')}{
+                    flex: 77;
+                }
+            }
+            
+        }
+
+        ytd-watch-flexy.style-scope:not([fullscreen]) {
+
+            & {
+                --ytd-margin-2y: var(--ytd-margin-2x);
+                --ytd-margin-4y: var(--ytd-margin-4x);
+                --ytd-margin-6y: var(--ytd-margin-6x);
+                --ytd-margin-8y: var(--ytd-margin-8x);
+            }
+
+            #columns.style-scope.ytd-watch-flexy {
+                --ytd-margin-2x: 0;
+                --ytd-margin-4x: 0;
+                --ytd-margin-6x: 0;
+                --ytd-margin-8x: 0;
+            }
+
+            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy),
+            #below,
+            #player {
+                --ytd-margin-2x: var(--ytd-margin-2y);
+                --ytd-margin-4x: var(--ytd-margin-4y);
+                --ytd-margin-6x: var(--ytd-margin-6y);
+                --ytd-margin-8x: var(--ytd-margin-8y);
+            }
+
+            #secondary-inner.style-scope.ytd-watch-flexy {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            #secondary-inner.style-scope.ytd-watch-flexy > * {
+                flex-shrink: 0;
+            }
+
+            #movie_player {
+                position: relative;
+                > .html5-video-container:has(video) {
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    position: absolute;
+                }
+
+                .html5-video-container > video {
+                    width: unset !important;
+                    height: 100% !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    max-height: 100%;
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+
+                .html5-video-container > video[style*="top:"]:not(video[style*="top: -"]):not(video[style*="top:-"]) {
+                    top: 0 !important;
+                }
+
+            }
+
+            #chat-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #right-tabs {
+                display: flex;
+                margin: 0 !important;
+                flex: 1;
+                flex-direction: column;
+
+                {buildL4('is', '#material-tabs', '.tab-content')} {
+                    outline: 0;
+                }
+
+                .tab-content {
+                    flex: 77;
+                }
+            }
+
+            &:not([is-two-columns_]) #primary-inner > *:not(#player) {
+                padding: 0;
+            }
+
+            &:not([is-two-columns_]) #primary-inner #below > *:not([id|="chat"]) {
+                padding: 0 primary-content-margin 0;
+            }
+
+        }
+
+        
         if no-round-border {
 
             ytd-live-chat-frame[rounded-container],
@@ -862,7 +766,10 @@ t33 = t34
         
     }
     
-    content361() //
+    
+    
+    
+    contentBase() //
     
     selectors-2col = { //
          "expanded-panel": join(', ', 
@@ -893,7 +800,6 @@ t33 = t34
     for selector-k in selectors-k {
      
         {s(selector-k)} {
-            
             
             if no-masthead-w==1 {
                 contentNoMasthead()
@@ -963,11 +869,8 @@ t33 = t34
 
     
 
-
     if youtube-wpr {
 
-
-            
         @css {
                 
             @supports selector(:has(body)) {

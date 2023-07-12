@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.9
+@version        0.5.10
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -694,6 +694,20 @@ t33 = t34
                 margin-bottom: -2px;
             }
 
+            
+        
+            chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
+
+            &{selector(chat-selector)} {
+                
+                ytd-watch-flexy.style-scope:not([fullscreen]) {
+                    
+                    .style-scope{buildL4('is', '#chat', '#chat-container')}{
+                        flex: 77;
+                    }
+                }
+                
+            }
 
             ytd-watch-flexy.style-scope:not([fullscreen]) {
 
@@ -770,9 +784,9 @@ t33 = t34
 
                 }
 
-
-                #chat:not([collapsed]) {
-                    flex: 77;
+                #chat-container {
+                    display: flex;
+                    flex-direction: column;
                 }
 
                 #right-tabs {

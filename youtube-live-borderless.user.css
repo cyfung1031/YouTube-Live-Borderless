@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.11
+@version        0.5.12
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -65,7 +65,7 @@
         // dummy
         border: 0; 
     }
-    
+
     buildL4(type, args...) {
         st1 = join('', ':', type, '(', join('\, ', args), ')')
         selector(st1)
@@ -83,7 +83,7 @@
     if chat-btn-height == 0px + 1px {
         chat-btn-height = 0px
     }
-    
+
     // masthead-hoverable-height = (masthead-hoverable-h - 1) * 2px
 
     no-masthead-w = no-masthead //
@@ -93,9 +93,9 @@
     if single-col-mobile == 1 and no-masthead-w == 0 {
         no-masthead-w = 2 //
     }
-    
+
     chat-zoom-for-mobile-enable = ((chat-zoom-for-mobile < 1) or (chat-zoom-for-mobile > 1))
-    
+
     contentBase() {
         
         html {
@@ -107,7 +107,17 @@
             top:-200vh;
             left:-200vw;
         }
-        
+
+        ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy,
+        ytd-watch-flexy[flexy] #player-container-inner.ytd-watch-flexy {
+            pointer-events: none;    
+        }
+
+        ytd-watch-flexy[flexy] #player-container.ytd-watch-flexy,
+        ytd-watch-flexy[flexy] #ytd-player.ytd-watch-flexy {
+            pointer-events: initial;    
+        }
+
         // general fix
         ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy {
             min-height: unset;
@@ -123,16 +133,16 @@
             padding-top: 0;
             margin-top: 0;
         }
-        
+
         m = youtube-wpr ? ':not([tabview-loaded])[youtube-wpr*="h2"]': ":not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)"
-        
+
         html{selector(m)} {buildL4('is', 
             '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
             '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
             display: none !important;
         }
-        
-        
+
+
         html:not([tabview-loaded]) #cinematics {
             // contain: layout;
             contain: layout size style;
@@ -841,12 +851,12 @@
             contentSingleColMobile()
         }
     }
-    
+
     @css {
 
         @supports not selector(:has(body)) {
-            
-            
+
+
             html::after {
                 display: block;
                 content: 'Your browser does not support "has-selector". Please update to latest version and enable it via configuration.';
@@ -863,7 +873,7 @@
                 font-size: 14pt;
                 text-shadow: 1px 1px 2px #605262;
             }
-            
+
         }
     }
 

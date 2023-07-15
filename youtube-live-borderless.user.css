@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.12
+@version        0.5.13
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -119,7 +119,7 @@
         }
 
         // general fix
-        ytd-watch-flexy[theater] #player-theater-container.ytd-watch-flexy {
+        ytd-watch-flexy[theater] .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
             min-height: unset;
         }
         #movie_player .ytp-cued-thumbnail-overlay-image {
@@ -254,7 +254,8 @@
         ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
 
             height: 100vh;
-            #player-theater-container.ytd-watch-flexy {
+            
+            .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
                 flex: 77;
                 max-height: unset;
             }
@@ -266,7 +267,7 @@
 
         &:not([tabview-loaded]) ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
 
-            #player-theater-container.ytd-watch-flexy ~ #columns.style-scope.ytd-watch-flexy {
+            .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} ~ #columns.style-scope.ytd-watch-flexy {
                 overflow: visible;
             }
             
@@ -462,7 +463,7 @@
                 max-height: 100vh !important;
             }
 
-            ytd-watch-flexy{buildL4('is', '[theater]', '[fullscreen]')} #player-theater-container.ytd-watch-flexy {
+            ytd-watch-flexy{buildL4('is', '[theater]', '[fullscreen]')} .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
 
                 min-height: unset !important;
             }
@@ -534,7 +535,7 @@
             max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for very wide screen
         }
 
-        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) #player-theater-container.ytd-watch-flexy {
+        ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
             max-height: calc(100vh - var(--ytd-toolbar-height, 0px) - var(--ylb-min-below-area, 0px)); // for 4:3 video
 
         }
@@ -578,7 +579,7 @@
             }
 
 
-            ytd-watch-flexy:not([fullscreen]) #player-theater-container {
+            ytd-watch-flexy:not([fullscreen]) .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }
 
@@ -608,7 +609,7 @@
 
             --ylb-min-below-area: min-below-area-for-theater;
 
-            {buildL4('is', '#player', '#player-theater-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
+            {buildL4('is', '#player', '#player-theater-container', '#player-wide-container', '#player-container-outer', '#player-container-inner', '#player-container', '#movie_player', '#movie_player video')} { 
                 object-fit: contain;
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
             }

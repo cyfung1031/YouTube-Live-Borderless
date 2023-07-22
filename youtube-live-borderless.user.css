@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.15
+@version        0.5.16
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -907,7 +907,7 @@
                 }
                 
                 
-                html:not([youtube-wpr])::after {
+                html:not([youtube-wpr]) ytd-watch-flexy::after {
                     display: block;
                     content: 'YouTube Live Borderless: YouTube WPR is not yet installed. Please install the userscript https://greasyfork.org/scripts/457319 in order to use YouTube WPR';
                     width: 60vh;
@@ -923,6 +923,7 @@
                     font-size: 14pt;
                     text-shadow: 1px 1px 2px #605262;
                     animation: wpr-message-appear 1ms 2s forwards;
+                    z-index: 9999;
                 }
         
                 

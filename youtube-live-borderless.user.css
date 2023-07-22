@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.14
+@version        0.5.15
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -447,9 +447,12 @@
                 touch-action: none !important;
             }
             
-            #below ~ [id|="chat"] {
+            #below ~ [id|="chat"],
+            #primary-inner.ytd-watch-flexy ~ [id|="chat"],
+            #primary.ytd-watch-flexy ~ [id|="chat"] {
                 flex: 1;
             }
+            
 
             #below:not(:has(#chat)) {
                 display: none;

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.16
+@version        0.5.20
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -42,6 +42,7 @@
 @var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom"                   [36, 0, 60, 4, 'px']
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
+@var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          0
 ==/UserStyle== */
 /*
 
@@ -676,6 +677,15 @@
                 --ytd-margin-4x: var(--ytd-margin-4y);
                 --ytd-margin-6x: var(--ytd-margin-6y);
                 --ytd-margin-8x: var(--ytd-margin-8y);
+            }
+            
+            if unlimit-player-max-width {
+                html body ytd-watch-flexy.style-scope[class][flexy]:not([attr1][attr2]) #columns.ytd-watch-flexy.style-scope[class] {
+                    max-width: initial;
+                }
+                #columns {
+                    --ytd-watch-flexy-max-player-width: initial;
+                }
             }
 
             #secondary-inner.style-scope.ytd-watch-flexy {

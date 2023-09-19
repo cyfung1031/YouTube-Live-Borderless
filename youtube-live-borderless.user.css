@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.20
+@version        0.5.21
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -43,6 +43,7 @@
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
 @var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          0
+@var checkbox   video-no-round-angle            "Video No Round Angle"                              0
 ==/UserStyle== */
 /*
 
@@ -152,6 +153,11 @@
             pointer-events: none;
         }
 
+        if video-no-round-angle {
+            ytd-watch-flexy[rounded-player-large][default-layout] #ytd-player.ytd-watch-flexy.ytd-watch-flexy {
+                border-radius: 0;
+            }
+        }
 
     }
 

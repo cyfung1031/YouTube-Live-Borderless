@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.22
+@version        0.5.23
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -486,8 +486,17 @@
         
     }
     
+    content2cHTML() {
+        // html
+        
+        body.lock-scrollbar {
+            overflow-y: auto;
+        }
+        
+    }
 
-    content2c() {
+    content2cMAIN() {
+        // body or html
     
         if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
 
@@ -555,18 +564,48 @@
 
         }
 
-        body.lock-scrollbar {
-            overflow-y: auto;
-        }
-
         ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
             width: side-panel-width;
         }
  
     }
-
-    contentf() {
+    
+    contentfHTML(){
         // html
+        
+        
+
+        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+            max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+        }
+
+       
+        &:not([tabview-loaded]) {
+
+            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
+
+                max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
+
+            }
+        }
+    
+        chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
+
+        &{selector(chat-selector)} {
+            
+            ytd-watch-flexy.style-scope:not([fullscreen]) {
+                
+                .style-scope{buildL4('is', '#chat', '#chat-container')}{
+                    flex: 77;
+                }
+            }
+            
+        }
+        
+    }
+
+    contentfMAIN() {
+        // body or html
         
 
         if (video-padding-left-right + video-padding-top-bottom) > 0 {
@@ -581,18 +620,7 @@
         }
 
 
-        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
-            max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-        }
-
         &:not([tabview-loaded]) {
-
-            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
-
-                max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
-
-            }
-
 
             ytd-watch-flexy:not([fullscreen]) .ytd-watch-flexy{buildL4('is', '#player-theater-container', '#player-wide-container')} {
                 max-height: calc(100vh - var(--ytd-toolbar-height) - var(--ylb-min-below-area, 0px)) !important;
@@ -650,16 +678,6 @@
     
         chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
 
-        &{selector(chat-selector)} {
-            
-            ytd-watch-flexy.style-scope:not([fullscreen]) {
-                
-                .style-scope{buildL4('is', '#chat', '#chat-container')}{
-                    flex: 77;
-                }
-            }
-            
-        }
 
         ytd-watch-flexy.style-scope:not([fullscreen]) {
 
@@ -782,9 +800,11 @@
     } // 
     
     
-    contentg() {
+        
+    contentgHTML() {
+        // html
 
-        content2c() //
+        content2cHTML() //
         
         selector-g = '' //
         
@@ -794,7 +814,29 @@
             
         &{s(selector-g)} { //
             // html
-            contentf() //
+            contentfHTML() //
+        } //
+            
+        
+            
+        
+    }
+    
+        
+    contentgMAIN() {
+        // body or html
+
+        content2cMAIN() //
+        
+        selector-g = '' //
+        
+        if mode-for-single-col=="disabled" { //
+            selector-g = youtube-wpr ? '[youtube-wpr*="s"]': ":has(ytd-watch-flexy[is-two-columns_])" //
+        } //
+            
+        &{s(selector-g)} { //
+            // html
+            contentfMAIN() //
         } //
             
             
@@ -841,14 +883,16 @@
             }
             
             if compatible-ytlstm {
+                contentgHTML()
                 
                 body:not([data-ytlstm-theater-mode]) {
-                    contentg() //
+                    contentgMAIN() //
                 }
                 
             } else {
                     
-                contentg() //
+                contentgHTML()
+                contentgMAIN() //
             }
             
         }

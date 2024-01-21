@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.23
+@version        0.5.24
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -43,6 +43,7 @@
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
 @var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          0
+@var checkbox   fix-player-height-overflow      "Fix Player Height Overflow"                        1
 @var checkbox   video-no-round-angle            "Video No Round Angle"                              0
 @var checkbox   compatible-ytlstm               "Compatible with ytlstm-theater-mode"               0
 ==/UserStyle== */
@@ -109,6 +110,12 @@
             position: fixed;
             top:-200vh;
             left:-200vw;
+        }
+
+        if fix-player-height-overflow {
+            html:not([tabview-loaded]) #player > #player-container-outer.style-scope.ytd-watch-flexy {
+                contain: layout;
+            }
         }
 
         ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy,

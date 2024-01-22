@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.27
+@version        0.5.28
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -42,7 +42,7 @@
 @var range      chat-btn-height                 "RightCol.Chat ::SpaceAbove@Zoom"                   [36, 0, 60, 4, 'px']
 @var number     chat-zoom-for-mobile            "YTMobile.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
 @var range      chat-min-height                 "YTMobile.Chat ::Min.Height"                        [400, 20, 900, 10, 'px']
-@var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          0
+@var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          1
 @var checkbox   fix-player-height-overflow      "Fix Player Height Overflow"                        1
 @var checkbox   video-no-round-angle            "Video No Round Angle"                              0
 @var checkbox   compatible-ytlstm               "Compatible with ytlstm-theater-mode"               0

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.26
+@version        0.5.27
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -47,6 +47,7 @@
 @var checkbox   video-no-round-angle            "Video No Round Angle"                              0
 @var checkbox   compatible-ytlstm               "Compatible with ytlstm-theater-mode"               0
 @var checkbox   fix-for-ytlc                    "Fix for YouTubeLiveClock"                          0
+@var checkbox   show-comments-region            "Show Comments (without Tabview Youtube)"           0
 ==/UserStyle== */
 /*
 
@@ -121,7 +122,7 @@
 
         if fix-for-ytlc {
 
-            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20221107)) and (selector(:has(style#id))) {
+            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20221107)) {
 
                 /* 2022/11/07 - specific fix for YouTubeLiveClock - chrome only */
                 html:has(style#ytlctn-style-for-native-control) #columns.ytd-watch-flexy #player::after {
@@ -155,7 +156,7 @@
                 
             }
 
-            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20240123)) and (selector(:has(style#id))) {
+            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20240123)) {
 
                 /* 2024/01/23 - specific fix for YouTubeLiveClock - chrome only */
                 html:has(style#ytlc-style-for-native-control) #columns.ytd-watch-flexy #player::after {
@@ -219,10 +220,12 @@
             margin-top: 0;
         }
 
-        m = youtube-wpr ? ':not([tabview-loaded])[youtube-wpr*="h2"]': ":not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)"
+        m = youtube-wpr ? ':not([tabview-loaded])[youtube-wpr*="h2"]' : ':not([tabview-loaded]):has(ytd-live-chat-frame#chat:not([collapsed])):has(iframe#chatframe)'
+
+        selector-comments-1 = show-comments-region ? '#primary-inner.ytd-watch-flexy ytd-commentsx#commentsx.ytd-watch-flexy' : '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy'
 
         html{selector(m)} {buildL4('is', 
-            '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy', 
+            selector-comments-1, 
             '#secondary-inner.ytd-watch-flexy > #related.ytd-watch-flexy')} {
             display: none !important;
         }
@@ -452,6 +455,8 @@
         
         
         m = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
+        
+        selector-comments-2 = show-comments-region ? '#primary-inner.ytd-watch-flexy ytd-commentsx#commentsx.ytd-watch-flexy' : '#primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy'
 
         &{selector(m)} {
             // html:has(ytd-watch-flexy:not([is-two-columns_]):not([fullscreen])):has(#chat:not([collapsed]))
@@ -465,7 +470,7 @@
             }
  
 
-            #primary-inner.ytd-watch-flexy ytd-comments#comments.ytd-watch-flexy,
+            {selector-comments-2},
             #below.ytd-watch-flexy > .ytd-watch-flexy{buildL4('is', '#related', 'ytd-watch-metadata')} {
                 /* display:none !important; */
                 position: fixed !important;

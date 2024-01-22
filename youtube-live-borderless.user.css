@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.24
+@version        0.5.25
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -112,7 +112,7 @@
             left:-200vw;
         }
 
-        if fix-player-height-overflow {
+        if fix-player-height-overflow { // 縦配信
             html:not([tabview-loaded]) #player > #player-container-outer.style-scope.ytd-watch-flexy {
                 contain: layout;
             }

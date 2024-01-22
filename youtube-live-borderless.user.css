@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.25
+@version        0.5.26
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -46,6 +46,7 @@
 @var checkbox   fix-player-height-overflow      "Fix Player Height Overflow"                        1
 @var checkbox   video-no-round-angle            "Video No Round Angle"                              0
 @var checkbox   compatible-ytlstm               "Compatible with ytlstm-theater-mode"               0
+@var checkbox   fix-for-ytlc                    "Fix for YouTubeLiveClock"                          0
 ==/UserStyle== */
 /*
 
@@ -116,6 +117,80 @@
             html:not([tabview-loaded]) #player > #player-container-outer.style-scope.ytd-watch-flexy {
                 contain: layout;
             }
+        }
+
+        if fix-for-ytlc {
+
+            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20221107)) and (selector(:has(style#id))) {
+
+                /* 2022/11/07 - specific fix for YouTubeLiveClock - chrome only */
+                html:has(style#ytlctn-style-for-native-control) #columns.ytd-watch-flexy #player::after {
+                    content: "";
+                    background-color: transparent;
+                    border-color: transparent;
+                    color: transparent;
+                    box-sizing: border-box;
+                    border-style: dotted;
+                    display: flex;
+                    height: 0px;
+                    margin: 0;
+                    border: 0;
+                    margin-top: 51px;
+                    width: calc(100% - 4px);
+                    position: relative;
+                    pointer-events: none;
+                }
+
+                html:has(style#ytlctn-style-for-native-control) #columns.ytd-watch-flexy #below {
+                    transform: initial;
+                }
+
+                html:has(style#ytlctn-style-for-native-control) ytd-watch-flexy[flexy][is-two-columns_][theater] #columns.ytd-watch-flexy {
+                    margin-top: 51px;
+                }
+                
+                html:has(style#ytlctn-style-for-native-control) #columns {
+                    overflow: revert;
+                }
+                
+            }
+
+            @supports (color: var(--compatibile-with-chrome-plugin-youtube-live-clock-20240123)) and (selector(:has(style#id))) {
+
+                /* 2024/01/23 - specific fix for YouTubeLiveClock - chrome only */
+                html:has(style#ytlc-style-for-native-control) #columns.ytd-watch-flexy #player::after {
+                    content: "";
+                    background-color: transparent;
+                    border-color: transparent;
+                    color: transparent;
+                    box-sizing: border-box;
+                    border-style: dotted;
+                    display: flex;
+                    height: 0px;
+                    margin: 0;
+                    border: 0;
+                    margin-top: 51px;
+                    width: calc(100% - 4px);
+                    position: relative;
+                    pointer-events: none;
+                }
+
+                html:has(style#ytlc-style-for-native-control) #columns.ytd-watch-flexy #below {
+                    transform: initial;
+                }
+
+                html:has(style#ytlc-style-for-native-control) ytd-watch-flexy[flexy][is-two-columns_][theater] #columns.ytd-watch-flexy {
+                    margin-top: 51px;
+                }
+                
+                html:has(style#ytlc-style-for-native-control) #columns {
+                    overflow: revert;
+                }
+                
+            }
+
+
+
         }
 
         ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy,

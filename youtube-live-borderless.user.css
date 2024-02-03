@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.28
+@version        0.5.29
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -115,8 +115,14 @@
         }
 
         if fix-player-height-overflow { // 縦配信
-            html:not([tabview-loaded]) #player > #player-container-outer.style-scope.ytd-watch-flexy {
-                contain: layout;
+            html:not([tabview-loaded]) {
+                --yt-fix-player-contain: layout;
+            }
+            .efyt-mini-player {
+                --yt-fix-player-contain: initial;
+            }
+            #player > #player-container-outer.style-scope.ytd-watch-flexy {
+                contain: var(--yt-fix-player-contain);
             }
         }
 

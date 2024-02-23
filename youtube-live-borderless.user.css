@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.29
+@version        0.5.30
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -590,8 +590,8 @@
 
     content2cMAIN() {
         // body or html
-    
-        if chat-zoom-for-right-col >1 or chat-zoom-for-right-col < 1 {
+
+        if chat-zoom-for-right-col > 1 or chat-zoom-for-right-col < 1 {
 
             ytd-watch-flexy[is-two-columns_]:not([fullscreen]) iframe#chatframe {
 
@@ -770,7 +770,10 @@
         
     
         chat-selector = youtube-wpr ? '[youtube-wpr*="h2"]': ":has(#chat:not([collapsed]))"
-
+        
+        #secondary-inner.ytd-watch-flexy {
+            --tabview-slider-right: 0px !important;
+        }
 
         ytd-watch-flexy.style-scope:not([fullscreen]) {
 

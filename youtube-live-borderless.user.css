@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.33
+@version        0.5.35
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -797,6 +797,7 @@
             }
 
             .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy):not(secondary-wrapper),
+            .style-scope.ytd-watch-flexy > secondary-wrapper > :not(.ytd-watch-flexy),
             #below,
             #player {
                 --ytd-margin-2x: var(--ytd-margin-2y);

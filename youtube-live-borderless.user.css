@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.36
+@version        0.5.37
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -45,7 +45,7 @@
 @var checkbox   unlimit-player-max-width        "Unlimit Player Max Width"                          1
 @var checkbox   fix-player-height-overflow-a    "Fix Player Height Overflow (v1)"                   0
 @var checkbox   fix-player-height-overflow-b    "Fix Player Height Overflow (v2)"                   1
-@var checkbox   video-no-round-angle            "Video No Round Angle"                              0
+@var checkbox   video-no-round-angle            "Video No Round Angle"                              1
 @var checkbox   compatible-ytlstm               "Compatible with ytlstm-theater-mode"               0
 @var checkbox   fix-for-ytlc                    "Fix for YouTubeLiveClock"                          0
 @var checkbox   show-comments-region            "Show Comments (without Tabview Youtube)"           0

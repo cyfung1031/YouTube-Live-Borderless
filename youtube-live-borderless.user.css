@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.40
+@version        0.5.41
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -419,11 +419,11 @@
         }
 
         #chat:not([collapsed]) {
-            --ytd-margin-2x: 0;
-            --ytd-margin-3x: 0;
-            --ytd-margin-4x: 0;
-            --ytd-margin-6x: 0;
-            --ytd-margin-8x: 0;
+            --ytd-margin-2x: 0px;
+            --ytd-margin-3x: 0px;
+            --ytd-margin-4x: 0px;
+            --ytd-margin-6x: 0px;
+            --ytd-margin-8x: 0px;
 
             height: 100% !important;
             min-height: unset !important;
@@ -709,9 +709,14 @@
 
     contentfMAIN() {
         // body or html
-        
-        & {
+
+        #lyricscontainer {
             --ygl-container-right: 0px;
+            --ytd-margin-2x: 0px;
+            --ytd-margin-3x: 0px;
+            --ytd-margin-4x: 0px;
+            --ytd-margin-6x: 0px;
+            --ytd-margin-8x: 0px;
         }
 
         if (video-padding-left-right + video-padding-top-bottom) > 0 {
@@ -799,11 +804,11 @@
             }
 
             #columns.style-scope.ytd-watch-flexy {
-                --ytd-margin-2x: 0;
-                --ytd-margin-3x: 0;
-                --ytd-margin-4x: 0;
-                --ytd-margin-6x: 0;
-                --ytd-margin-8x: 0;
+                --ytd-margin-2x: 0px;
+                --ytd-margin-3x: 0px;
+                --ytd-margin-4x: 0px;
+                --ytd-margin-6x: 0px;
+                --ytd-margin-8x: 0px;
             }
 
             .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy):not(secondary-wrapper),

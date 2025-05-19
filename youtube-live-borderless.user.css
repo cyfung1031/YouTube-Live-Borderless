@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.37
+@version        0.5.38
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -877,6 +877,10 @@
                 .tab-content {
                     flex: 77;
                 }
+            }
+
+            &[tyt-tab=""] #right-tabs {
+                flex: 0;
             }
 
             &:not([is-two-columns_]) #primary-inner > *:not(#player) {

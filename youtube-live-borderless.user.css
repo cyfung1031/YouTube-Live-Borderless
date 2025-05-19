@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.31
+@version        0.5.32
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -247,7 +247,8 @@
         }
 
         if video-no-round-angle {
-            ytd-watch-flexy[rounded-player-large][default-layout] #ytd-player.ytd-watch-flexy.ytd-watch-flexy {
+            ytd-watch-flexy[rounded-player-large][default-layout] #ytd-player.ytd-watch-flexy.ytd-watch-flexy,
+            ytd-watch-flexy[rounded-player][default-layout] #ytd-player.ytd-watch-flexy.ytd-watch-flexy {
                 border-radius: 0;
             }
         }
@@ -412,6 +413,7 @@
 
         #chat:not([collapsed]) {
             --ytd-margin-2x: 0;
+            --ytd-margin-3x: 0;
             --ytd-margin-4x: 0;
             --ytd-margin-6x: 0;
             --ytd-margin-8x: 0;
@@ -780,6 +782,7 @@
 
             & {
                 --ytd-margin-2y: var(--ytd-margin-2x);
+                --ytd-margin-3y: var(--ytd-margin-3x);
                 --ytd-margin-4y: var(--ytd-margin-4x);
                 --ytd-margin-6y: var(--ytd-margin-6x);
                 --ytd-margin-8y: var(--ytd-margin-8x);
@@ -787,15 +790,17 @@
 
             #columns.style-scope.ytd-watch-flexy {
                 --ytd-margin-2x: 0;
+                --ytd-margin-3x: 0;
                 --ytd-margin-4x: 0;
                 --ytd-margin-6x: 0;
                 --ytd-margin-8x: 0;
             }
 
-            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy),
+            .style-scope.ytd-watch-flexy > :not(.ytd-watch-flexy):not(secondary-wrapper),
             #below,
             #player {
                 --ytd-margin-2x: var(--ytd-margin-2y);
+                --ytd-margin-3x: var(--ytd-margin-3y);
                 --ytd-margin-4x: var(--ytd-margin-4y);
                 --ytd-margin-6x: var(--ytd-margin-6y);
                 --ytd-margin-8x: var(--ytd-margin-8y);

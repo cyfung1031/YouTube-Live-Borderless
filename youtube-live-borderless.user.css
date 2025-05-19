@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.38
+@version        0.5.39
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -710,6 +710,9 @@
     contentfMAIN() {
         // body or html
         
+        & {
+            --ygl-container-right: 0;
+        }
 
         if (video-padding-left-right + video-padding-top-bottom) > 0 {
 

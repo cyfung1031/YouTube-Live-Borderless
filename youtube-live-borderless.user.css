@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.42
+@version        0.5.43
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -358,6 +358,27 @@
                 height: 100vh;
                 max-height: 100%;
             }
+
+            if fix-below-area-scroll {
+
+                #primary-inner.style-scope.ytd-watch-flexy {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                #primary-inner.style-scope.ytd-watch-flexy > [id] {
+                    flex-shrink: 0;
+                }
+
+                #primary-inner.style-scope.ytd-watch-flexy > #below.style-scope.ytd-watch-flexy:last-child {
+                    flex-grow: 1;
+                    flex-shrink: 0;
+                    contain: size;
+                    overflow: auto;
+                    height: auto;
+                }
+            }
+
         }
 
         ytd-watch-flexy.style-scope[is-two-columns_][theater]:not([fullscreen]) {
@@ -678,29 +699,6 @@
                 --ytd-watch-flexy-max-player-width-wide-screen: calc(100vw - var(--ytd-watch-flexy-sidebar-width));
                 --ytd-watch-flexy-max-player-width: calc(100vw - var(--ytd-watch-flexy-sidebar-width));
             }
-        }
-        
-        if fix-below-area-scroll {
-        
-            #primary-inner.style-scope.ytd-watch-flexy {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #primary-inner.style-scope.ytd-watch-flexy > [id] {
-                flex-shrink: 0;
-            }
-
-            #primary-inner.style-scope.ytd-watch-flexy > #below.style-scope.ytd-watch-flexy:last-child {
-                flex-grow: 1;
-                flex-shrink: 0;
-                contain: size;
-                overflow: auto;
-                height: auto;
-            }
-            
-            
-            
         }
         
     }

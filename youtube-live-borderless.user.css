@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.43
+@version        0.5.44
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -935,13 +935,25 @@
         
         if no-round-border {
 
-            ytd-live-chat-frame[rounded-container],
-            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame,
-            ytd-live-chat-frame[rounded-container] iframe.ytd-live-chat-frame,
-            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next,
-            ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next:hover {
-                border-radius: unset;
+            ytd-watch-flexy.style-scope[is-two-columns_]:not([fullscreen]):not([theater]) {
+
+                ytd-live-chat-frame[rounded-container],
+                ytd-live-chat-frame[rounded-container] iframe.ytd-live-chat-frame,
+                &[tyt-tab] #right-tabs #material-tabs,
+                ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame,
+                ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next,
+                ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame ytd-toggle-button-renderer.ytd-live-chat-frame button.yt-spec-button-shape-next:hover,
+                ytd-live-chat-frame[rounded-container] #show-hide-button.ytd-live-chat-frame button
+                {
+                    border-radius: unset;
+                }
+
+                ytd-live-chat-frame #show-hide-button.ytd-live-chat-frame > ytd-button-renderer.style-scope.ytd-live-chat-frame{
+                    margin: 0;
+                }
+
             }
+
         }
 
 

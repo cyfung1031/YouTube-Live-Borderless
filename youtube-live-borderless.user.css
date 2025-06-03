@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.41
+@version        0.5.42
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -36,6 +36,7 @@
 @var checkbox   no-bottom-row                   "Bottom.PrimaryMetaInfoRow ::Hide"                  0
 @var range      min-below-area                  "BelowArea ::Minimum"                               [120, 0, 240, 10, 'px']
 @var range      min-below-area-for-theater      "WideTheater.BelowArea ::Minimum"                   [120, 0, 240, 10, 'px']
+@var checkbox   fix-below-area-scroll           "Bottom.FixScroll (without Tabview Youtube)"        1
 @var number     side-panel-width                "SidePanel ::Width"                                 [440, 320, 640, 20, "px"]
 @var checkbox   no-round-border                 "RoundBorder ::Disable"                             1
 @var number     chat-zoom-for-right-col         "RightCol.Chat ::Zoom"                              [1.0, 0.4, 1.2, 0.05]
@@ -670,7 +671,38 @@
         ytd-watch-flexy.style-scope[is-two-columns_] #columns.ytd-watch-flexy > #secondary.ytd-watch-flexy {
             width: side-panel-width;
         }
- 
+        
+        if unlimit-player-max-width {
+            ytd-watch-flexy.style-scope, ytd-watch-flexy.style-scope > * {
+                --ytd-watch-flexy-sidebar-width: side-panel-width;
+                --ytd-watch-flexy-max-player-width-wide-screen: calc(100vw - var(--ytd-watch-flexy-sidebar-width));
+                --ytd-watch-flexy-max-player-width: calc(100vw - var(--ytd-watch-flexy-sidebar-width));
+            }
+        }
+        
+        if fix-below-area-scroll {
+        
+            #primary-inner.style-scope.ytd-watch-flexy {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #primary-inner.style-scope.ytd-watch-flexy > [id] {
+                flex-shrink: 0;
+            }
+
+            #primary-inner.style-scope.ytd-watch-flexy > #below.style-scope.ytd-watch-flexy:last-child {
+                flex-grow: 1;
+                flex-shrink: 0;
+                contain: size;
+                overflow: auto;
+                height: auto;
+            }
+            
+            
+            
+        }
+        
     }
     
     contentfHTML(){
@@ -823,11 +855,12 @@
             }
             
             if unlimit-player-max-width {
-                html body ytd-watch-flexy.style-scope[class][flexy]:not([attr1][attr2]) #columns.ytd-watch-flexy.style-scope[class] {
+                &.style-scope[class][flexy]:not([attr1][attr2]) #columns.ytd-watch-flexy.style-scope[class] {
                     max-width: initial;
                 }
                 #columns {
                     --ytd-watch-flexy-max-player-width: initial;
+                    --ytd-watch-flexy-max-player-width-wide-screen: initial;
                 }
             }
 

@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           YouTube Live Borderless
-@version        0.5.45
+@version        0.5.46
 @namespace      github.com/cyfung1031
 @license        MIT
 @description    Make YouTube Live Borderless
@@ -161,7 +161,7 @@
                     transform: initial;
                 }
 
-                html:has(style#ytlctn-style-for-native-control) ytd-watch-flexy[flexy][is-two-columns_][theater] #columns.ytd-watch-flexy {
+                html:has(style#ytlctn-style-for-native-control) ytd-watch-flexy[class][is-two-columns_][theater] #columns.ytd-watch-flexy {
                     margin-top: 51px;
                 }
                 
@@ -195,7 +195,7 @@
                     transform: initial;
                 }
 
-                html:has(style#ytlc-style-for-native-control) ytd-watch-flexy[flexy][is-two-columns_][theater] #columns.ytd-watch-flexy {
+                html:has(style#ytlc-style-for-native-control) ytd-watch-flexy[class][is-two-columns_][theater] #columns.ytd-watch-flexy {
                     margin-top: 51px;
                 }
                 
@@ -209,13 +209,13 @@
 
         }
 
-        ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy,
-        ytd-watch-flexy[flexy] #player-container-inner.ytd-watch-flexy {
+        ytd-watch-flexy[class] #player-container-outer.ytd-watch-flexy,
+        ytd-watch-flexy[class] #player-container-inner.ytd-watch-flexy {
             pointer-events: none;    
         }
 
-        ytd-watch-flexy[flexy] #player-container.ytd-watch-flexy,
-        ytd-watch-flexy[flexy] #ytd-player.ytd-watch-flexy {
+        ytd-watch-flexy[class] #player-container.ytd-watch-flexy,
+        ytd-watch-flexy[class] #ytd-player.ytd-watch-flexy {
             pointer-events: initial;    
         }
 
@@ -708,14 +708,14 @@
         
         
 
-        body ytd-watch-flexy[flexy] #player-container-outer.ytd-watch-flexy {
+        body ytd-watch-flexy[class] #player-container-outer.ytd-watch-flexy {
             max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
         }
 
        
         &:not([tabview-loaded]) {
 
-            body ytd-watch-flexy[flexy][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
+            body ytd-watch-flexy[class][is-two-columns_]{buildL4('is', '[is-extra-wide-video_]', '[is-four-three-to-sixteen-nine-video_]')} #primary.ytd-watch-flexy {
 
                 max-width: unset; // override var(--ytd-watch-flexy-max-player-width);
 
@@ -789,7 +789,7 @@
 
 
 
-        ytd-watch-flexy[flexy][is-two-columns_][theater]:not([fullscreen]) {
+        ytd-watch-flexy[class][is-two-columns_][theater]:not([fullscreen]) {
 
             --ylb-min-below-area: min-below-area-for-theater;
 
@@ -853,7 +853,7 @@
             }
             
             if unlimit-player-max-width {
-                &.style-scope[class][flexy]:not([attr1][attr2]) #columns.ytd-watch-flexy.style-scope[class] {
+                &.style-scope[class]:not([attr1][attr2]) #columns.ytd-watch-flexy.style-scope[class] {
                     max-width: initial;
                 }
                 #columns {
